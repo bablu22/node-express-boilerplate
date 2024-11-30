@@ -1,0 +1,57 @@
+{
+  "compilerOptions": {
+    // Basic Compilation Options
+    "target": "es2022", // Specify ECMAScript target version
+    "module": "commonjs", // Specify module code generation
+    "lib": ["es2022"], // Specify library files to be included in the compilation
+    "types": ["node"], // Specify type definition files to be included in the compilation
+    "outDir": "./dist", // Redirect output structure to this directory
+    "rootDir": "./src", // Specify the root directory of input files
+
+    // Strict Typing Options
+    "strict": true, // Enable all strict type-checking options
+    "noImplicitAny": true, // Raise error on expressions and declarations with an implied 'any' type
+    "strictNullChecks": true, // Enable strict null checks
+    "strictFunctionTypes": true, // Enable strict checking of function types
+    "strictBindCallApply": true, // Enable strict 'bind', 'call', and 'apply' methods on functions
+    "strictPropertyInitialization": true, // Enable strict checking of property initialization in classes
+
+    // Additional Checks
+    "noUnusedLocals": true, // Report errors on unused locals
+    "noUnusedParameters": true, // Report errors on unused parameters
+    "noImplicitReturns": true, // Report error when not all code paths in function return a value
+    "noFallthroughCasesInSwitch": true, // Report errors for fallthrough cases in switch statement
+
+    // Module Resolution Options
+    "moduleResolution": "node", // Specify module resolution strategy
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    // Source Map Options
+    "sourceMap": true, // Generates corresponding .map file
+    "inlineSourceMap": false, // Emit a single file with source maps instead of having a separate file
+
+    // Advanced Options
+    "esModuleInterop": true, // Enables emit interoperability between CommonJS and ES Modules
+    "resolveJsonModule": true, // Include modules imported with '.json' extension
+    "skipLibCheck": true, // Skip type checking of declaration files
+    "forceConsistentCasingInFileNames": true, // Ensure consistent casing in file names
+
+    // Experimental Options
+    "experimentalDecorators": true, // Enables experimental support for decorators
+    "emitDecoratorMetadata": true // Emit design-type metadata for decorated declarations
+  },
+
+  // Files to Include
+  "include": [
+    "src/**/*" // Include all files in src directory
+  ],
+
+  // Files to Exclude
+  "exclude": [
+    "node_modules", // Exclude node_modules
+    "build", // Exclude build output directory
+    "**/*.spec.ts" // Exclude test spec files
+  ]
+}

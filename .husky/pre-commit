@@ -1,0 +1,6 @@
+# Remove these lines:
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Retain or add your desired commands:
+npm run lint:fix

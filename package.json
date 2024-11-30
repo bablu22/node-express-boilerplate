@@ -1,0 +1,65 @@
+{
+  "name": "boilerplate",
+  "version": "1.0.0",
+  "description": "This is node js boilerplate project with typescript and express.js framework and mongodb database configuration implemented. It also includes linting, formatting, and git hooks for code quality and consistency. The project also includes a simple health check route to ensure the server is running correctly.",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "nodemon -r tsconfig-paths/register src/index.ts",
+    "build": "tsc",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bablu22/node-express-boilerplate.git"
+  },
+  "keywords": [
+    "Node",
+    "Express",
+    "Mongodb",
+    "TypeScript"
+  ],
+  "author": "Bablu Mia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bablu22/node-express-boilerplate/issues"
+  },
+  "homepage": "https://github.com/bablu22/node-express-boilerplate#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "mongoose": "^8.8.3",
+    "tsconfig-paths": "^4.2.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^9.16.0",
+    "@types/cookie-parser": "^1.4.8",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.1",
+    "@typescript-eslint/eslint-plugin": "^8.16.0",
+    "@typescript-eslint/parser": "^8.16.0",
+    "eslint": "^9.16.0",
+    "eslint-config-prettier": "^9.1.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.10",
+    "nodemon": "^3.1.7",
+    "prettier": "^3.4.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.16.0"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  }
+}
