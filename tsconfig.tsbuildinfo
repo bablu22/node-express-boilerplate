@@ -1,0 +1,1 @@
+{"root":["./src/index.ts","./src/common/get-env.ts","./src/config/app.config.ts","./src/database/index.ts","./src/routes/healthroutes.ts","./src/routes/index.ts"],"version":"5.7.2"}

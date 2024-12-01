@@ -1,4 +1,4 @@
-import { getEnv } from '@/common/get-env';
+import { getEnv } from '@/common/utils/get-env';
 
 const appConfig = () => ({
   NODE_ENV: getEnv('NODE_ENV', 'development'),
@@ -16,4 +16,6 @@ const appConfig = () => ({
   RESEND_API_KEY: getEnv('RESEND_API_KEY'),
 });
 
-export const config = appConfig();
+const config = appConfig();
+
+export default config;

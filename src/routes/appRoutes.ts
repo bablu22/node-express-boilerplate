@@ -20,4 +20,6 @@ router.get('/health', (_req: Request, res: Response) => {
   });
 });
 
-export const healthRoutes = router;
+const appRoutes = router;
+
+export default appRoutes;

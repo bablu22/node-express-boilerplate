@@ -1,13 +1,12 @@
 {
-  "name": "boilerplate",
+  "name": "node-express-boilerplate",
   "version": "1.0.0",
-  "description": "This is node js boilerplate project with typescript and express.js framework and mongodb database configuration implemented. It also includes linting, formatting, and git hooks for code quality and consistency. The project also includes a simple health check route to ensure the server is running correctly.",
-  "type": "module",
+  "description": "This is a Node.js boilerplate project with TypeScript, Express.js, and MongoDB database configuration. It also includes linting, formatting, and git hooks for code quality and consistency. The project includes a simple health check route to ensure the server is running correctly.",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/index.js",
-    "dev": "nodemon -r tsconfig-paths/register src/index.ts",
-    "build": "tsc",
+    "dev": "cross-env NODE_ENV=development nodemon",
+    "build": "swc src -d dist --copy-files",
+    "start": "npm run build && node dist/index.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write \"src/**/*.ts\"",
@@ -20,7 +19,7 @@
   "keywords": [
     "Node",
     "Express",
-    "Mongodb",
+    "MongoDB",
     "TypeScript"
   ],
   "author": "Bablu Mia",
@@ -30,12 +29,24 @@
   },
   "homepage": "https://github.com/bablu22/node-express-boilerplate#readme",
   "dependencies": {
+    "@swc/cli": "^0.5.1",
+    "@swc/core": "^1.9.3",
+    "bcryptjs": "^2.4.3",
+    "chalk": "^4.1.2",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
+    "date-fns": "^4.1.0",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
+    "jsonwebtoken": "^9.0.2",
+    "module-alias": "^2.2.3",
     "mongoose": "^8.8.3",
-    "tsconfig-paths": "^4.2.0"
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "tslib": "^2.8.1",
+    "uuid": "^11.0.3",
+    "winston": "^3.17.0",
+    "winston-daily-rotate-file": "^5.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
@@ -46,6 +57,7 @@
     "@types/node": "^22.10.1",
     "@typescript-eslint/eslint-plugin": "^8.16.0",
     "@typescript-eslint/parser": "^8.16.0",
+    "cross-env": "^7.0.3",
     "eslint": "^9.16.0",
     "eslint-config-prettier": "^9.1.0",
     "husky": "^9.1.7",
@@ -53,8 +65,13 @@
     "nodemon": "^3.1.7",
     "prettier": "^3.4.1",
     "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.10",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.16.0"
+  },
+  "_moduleAliases": {
+    "@": "dist"
   },
   "lint-staged": {
     "*.ts": [
