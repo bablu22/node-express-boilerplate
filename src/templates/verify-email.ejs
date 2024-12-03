@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Email Verification</title>
+    <style>
+      body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f4f8;
+      }
+      .email-container {
+        max-width: 600px;
+        margin: 30px auto;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: none;
+        overflow: hidden;
+        border: 1px solid #e0e0e0;
+      }
+      .header {
+        background-color: #432e54;
+        color: #ffffff;
+        text-align: center;
+        padding: 40px;
+        border-bottom: 2px solid #432e54;
+      }
+      .header h1 {
+        margin: 0;
+        font-size: 28px;
+        font-weight: bold;
+      }
+      .content {
+        padding: 30px;
+        text-align: center;
+        color: #333333;
+      }
+      .content p {
+        margin: 16px 0;
+        font-size: 16px;
+        line-height: 1.8;
+      }
+      .content p a {
+        text-decoration: none;
+        color: #007bff;
+        font-weight: bold;
+      }
+      .button {
+        display: inline-block;
+        padding: 15px 30px;
+        margin: 20px 0;
+        font-size: 18px;
+        color: #ffffff !important;
+        background-color: #1c325b;
+        text-decoration: none;
+        border-radius: 50px;
+        transition: background-color 0.3s;
+        box-shadow: 0 4px 6px rgba(0, 128, 0, 0.2);
+      }
+      .button:hover {
+        background-color: #1c325b;
+      }
+      .footer {
+        text-align: center;
+        padding: 15px;
+        font-size: 14px;
+        color: #777777;
+        background-color: #f9f9f9;
+        border-top: 1px solid #e0e0e0;
+      }
+      .footer a {
+        text-decoration: none;
+        color: #777777;
+      }
+      .footer a:hover {
+        color: #007bff;
+      }
+      .icon {
+        font-size: 40px;
+        color: #007bff;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="email-container">
+      <div class="header">
+        <h1>Email Verification</h1>
+      </div>
+      <div class="content">
+        <div class="icon">&#x2705;</div>
+        <p>Hello,</p>
+        <p>
+          Thank you for signing up with <strong>Your Company</strong>. We're excited to have you
+          onboard! To complete your registration, please verify your email address by clicking the
+          button below.
+        </p>
+        <a href="<%= verificationLink %>" class="button">Verify Your Email</a>
+        <p>
+          If you did not sign up, feel free to
+          <a href="mailto:support@yourcompany.com">contact support</a> or simply ignore this email.
+        </p>
+      </div>
+      <div class="footer">
+        <p>&copy; 2024 Your Company | <a href="#">Unsubscribe</a></p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -15,7 +15,8 @@ export default tseslint.config(
     files: ['**/*.ts'],
     rules: {
       // TypeScript-specific rules
-      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-empty-object-type': 'off',
       '@typescript-eslint/no-unused-vars': [
         'warn',
         {
@@ -26,7 +27,7 @@ export default tseslint.config(
       'no-console': 'off',
 
       // General rules
-      'no-undef': 'error',
+      'no-undef': 'off',
       'no-unused-expressions': 'error',
       'prefer-const': 'warn',
     },
@@ -39,7 +40,8 @@ export default tseslint.config(
         es2021: true,
         env: true,
       },
-      ecmaVersion: 2021,
+      sourceType: 'commonjs',
+      ecmaVersion: 'latest',
     },
   }
 );

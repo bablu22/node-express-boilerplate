@@ -12,8 +12,18 @@ const appConfig = () => ({
     REFRESH_SECRET: getEnv('JWT_REFRESH_SECRET'),
     REFRESH_EXPIRES_IN: getEnv('JWT_REFRESH_EXPIRES_IN', '30d'),
   },
-  MAILER_SENDER: getEnv('MAILER_SENDER'),
-  RESEND_API_KEY: getEnv('RESEND_API_KEY'),
+  REDIS: {
+    HOST: getEnv('REDIS_HOST', 'localhost'),
+    PORT: getEnv('REDIS_PORT', '6379'),
+    PASSWORD: getEnv('REDIS_PASSWORD'),
+  },
+
+  SMTP: {
+    SMTPHOST: getEnv('SMTPHOST'),
+    SMTPPORT: getEnv('SMTPPORT'),
+    SMTPUSER: getEnv('SMTPUSER'),
+    SMTPPASS: getEnv('SMTPPASS'),
+  },
 });
 
 const config = appConfig();

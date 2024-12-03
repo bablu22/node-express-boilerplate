@@ -1,5 +1,5 @@
 import { VerificationEnum } from '@/common/enums/verification-code.enums';
-import mongoose, { Document, Model } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 
 export interface UserPreferences {
   enable2FA: boolean;
@@ -16,6 +16,8 @@ export interface IUser extends Document {
   userPreferences: UserPreferences;
   createdAt: Date;
   updatedAt: Date;
+
+  comparePassword(value: string): Promise<boolean>;
 }
 
 export interface IVerificationCode extends Document {
@@ -24,8 +26,4 @@ export interface IVerificationCode extends Document {
   type: VerificationEnum;
   expiresAt: Date;
   createdAt: Date;
-}
-
-export interface IUserModel extends Model<IUser> {
-  comparePassword(value: string): Promise<boolean>;
 }

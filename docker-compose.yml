@@ -1,33 +1,115 @@
 version: '3.8'
 
+# Common environment variables
+x-common-env: &common-env
+  NODE_ENV: ${NODE_ENV:-development}
+  APP_ORIGIN: ${APP_ORIGIN:-http://localhost:3000}
+
+  # JWT Configuration
+  JWT_SECRET: ${JWT_SECRET:-change_this_to_a_secure_random_value}
+  JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-15m}
+  JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-change_this_to_another_secure_random_value}
+  JWT_REFRESH_EXPIRES_IN: ${JWT_REFRESH_EXPIRES_IN:-30d}
+
+  # Database Configurations
+  MONGO_URI: ${MONGO_URI:-mongodb://mongo:27017/appdb}
+  REDIS_HOST: ${REDIS_HOST:-redis}
+  REDIS_PORT: ${REDIS_PORT:-6379}
+  REDIS_PASSWORD: ${REDIS_PASSWORD:?err_redis_password_required}
+
 services:
-  app:
+  # Redis Service
+  redis:
+    image: redis:7-alpine
+    container_name: ${PROJECT_UNIQUE_ID:-node-boilerplate}_redis
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    command:
+      - redis-server
+      - --requirepass ${REDIS_PASSWORD}
+      - --appendonly yes
+      - --port ${REDIS_PORT:-6379}
+    networks:
+      - app_network
+    volumes:
+      - redis_data:/data
+    ports:
+      - '${REDIS_PORT:-6379}:${REDIS_PORT:-6379}'
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis Insight Service
+  redis-insight:
+    image: redislabs/redisinsight:latest
+    container_name: ${PROJECT_UNIQUE_ID:-node-boilerplate}_redis_insight
+    networks:
+      - app_network
+    ports:
+      - '${REDIS_INSIGHT_PORT:-8001}:8001'
+    volumes:
+      - redis_insight_data:/data
+    restart: unless-stopped
+    depends_on:
+      - redis
+
+  # MongoDB Service
+  mongo:
+    image: mongo:latest
+    container_name: ${PROJECT_UNIQUE_ID:-node-boilerplate}_mongo
+    networks:
+      - app_network
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - '${MONGO_PORT:-27017}:${MONGO_PORT:-27017}'
+    restart: unless-stopped
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh mongodb://localhost:27017 --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # API Server
+  api-server:
     build:
       context: .
-      dockerfile: docker/Dockerfile
-    ports:
-      - '3000:3000'
-    env_file:
-      - .env
-    depends_on:
-      - mongodb
-    networks:
-      - app-network
-
-  mongodb:
-    image: mongo:latest
-    ports:
-      - '27017:27017'
-    volumes:
-      - mongodb-data:/data/db
-    networks:
-      - app-network
+      dockerfile: Dockerfile
+    container_name: ${PROJECT_UNIQUE_ID:-node-boilerplate}_api_server
     environment:
-      - MONGO_INIT_DATABASE=your_database
+      <<: *common-env
+      PORT: ${PORT:-3000}
+      BASE_PATH: ${BASE_PATH:-/api}
+    volumes:
+      - ./logs:/logs
+      - ./:/app
+    networks:
+      - app_network
+    ports:
+      - '${PORT:-3000}:${PORT:-3000}'
+    restart: unless-stopped
+    depends_on:
+      redis:
+        condition: service_healthy
+      mongo:
+        condition: service_healthy
 
+# Volumes
 volumes:
-  mongodb-data:
+  redis_data:
+    name: ${PROJECT_UNIQUE_ID:-node-boilerplate}_redis_data
+  redis_insight_data:
+    name: ${PROJECT_UNIQUE_ID:-node-boilerplate}_redis_insight_data
+  mongo_data:
+    name: ${PROJECT_UNIQUE_ID:-node-boilerplate}_mongo_data
 
+# Networks
 networks:
-  app-network:
+  app_network:
+    name: ${PROJECT_UNIQUE_ID:-node-boilerplate}_network
     driver: bridge
+    driver_opts:
+      com.docker.network.driver.mtu: 1450

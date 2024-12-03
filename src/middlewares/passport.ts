@@ -6,4 +6,5 @@ const initializePassport = () => {
 };
 
 initializePassport();
+
 export default passport;

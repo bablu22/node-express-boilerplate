@@ -1,29 +1,35 @@
-# Use official Node.js image
-FROM node:20-alpine AS base
+# Build stage
+FROM node:20.11.1-alpine AS builder
 
-# Set working directory
 WORKDIR /app
 
-# Copy package files
 COPY package*.json ./
 
-# Install dependencies
-FROM base AS deps
-RUN npm ci
+RUN npm install
 
-# Build stage
-FROM base AS builder
-COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+
 RUN npm run build
 
 # Production stage
-FROM base AS runner
+FROM node:20.11.1-alpine
+
+WORKDIR /app
+
+# Create non-root user for security
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
-COPY --from=deps /app/node_modules ./node_modules
+COPY --from=builder /app/src/public ./dist/src/public
 
-# Expose port
-EXPOSE 5000
+COPY .env.example .env
 
-# Command to run the application
+# Change to non-root user
+USER appuser
+
+EXPOSE ${PORT:-5000}
+
+# Use absolute path for npm start
 CMD ["npm", "start"]

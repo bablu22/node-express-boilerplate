@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import { IUser, IUserModel, IVerificationCode, UserPreferences } from './user.interface';
+import { IUser, IVerificationCode, UserPreferences } from './user.interface';
 import { compareValue, hashValue } from '@common/utils/bcrypt';
 import mongoose from 'mongoose';
 import { generateUniqueCode } from '@/common/utils/uuid';
@@ -37,7 +37,7 @@ const verificationCodeSchema = new Schema<IVerificationCode>({
   },
 });
 
-const userSchema = new Schema<IUser | IUserModel>(
+const userSchema = new Schema<IUser>(
   {
     firstName: {
       type: String,
@@ -71,6 +71,12 @@ const userSchema = new Schema<IUser | IUserModel>(
   }
 );
 
+userSchema.methods.toJSON = function () {
+  const user = this.toObject();
+  delete user.password;
+  return user;
+};
+
 userSchema.pre<IUser>('save', async function (next) {
   if (this.isModified('password')) {
     this.password = await hashValue(this.password);
@@ -90,12 +96,12 @@ userSchema.set('toJSON', {
   },
 });
 
-const User = mongoose.model<IUser | IUserModel>('User', userSchema);
+const User = mongoose.model<IUser>('User', userSchema);
 
 export const VerificationCode = mongoose.model<IVerificationCode>(
   'VerificationCode',
   verificationCodeSchema,
-  'Verification-codes'
+  'verification-codes'
 );
 
 export default User;
