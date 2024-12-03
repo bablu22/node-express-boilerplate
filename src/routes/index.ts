@@ -1,4 +1,5 @@
 import authRoutes from '@/modules/Auth/auth.routes';
+import mfaRoutes from '@/modules/MFA/mfa.routes';
 import sessionRoutes from '@/modules/Session/session.routes';
 import { Router } from 'express';
 
@@ -12,6 +13,10 @@ const moduleRoutes = [
   {
     path: '/session',
     routes: sessionRoutes,
+  },
+  {
+    path: '/mfa',
+    routes: mfaRoutes,
   },
 ];
 
