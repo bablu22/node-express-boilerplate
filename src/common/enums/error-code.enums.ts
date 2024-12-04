@@ -18,6 +18,7 @@ const enum ErrorCode {
   // System Errors
   INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR',
   VERIFICATION_ERROR = 'VERIFICATION_ERROR',
+  FORBIDDEN = 'FORBIDDEN',
 }
 
 export default ErrorCode;

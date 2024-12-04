@@ -4,7 +4,7 @@ import config from '@/config/app.config';
 import { UnauthorizedException } from '@common/utils/error';
 import ErrorCode from '@/common/enums/error-code.enums';
 import { Request } from 'express';
-import { userService } from '@/modules/User/user.service';
+import { userService } from '@/modules/user/user.service';
 
 interface JwtPayload {
   userId: string;

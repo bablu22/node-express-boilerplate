@@ -1,8 +1,8 @@
 import { Schema } from 'mongoose';
-import { IUser, IVerificationCode, UserPreferences } from './user.interface';
 import { compareValue, hashValue } from '@common/utils/bcrypt';
 import mongoose from 'mongoose';
 import { generateUniqueCode } from '@/common/utils/uuid';
+import { IUser, IVerificationCode, UserPreferences } from './user.interface';
 
 const userPreferencesSchema = new Schema<UserPreferences>({
   enable2FA: { type: Boolean, default: false },
@@ -50,6 +50,38 @@ const userSchema = new Schema<IUser>(
     email: {
       type: String,
       unique: true,
+      required: true,
+    },
+    phone: {
+      type: String,
+      unique: true,
+      required: false,
+    },
+    address: {
+      type: String,
+      required: false,
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
+    roleId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Role',
+      required: true,
+    },
+    roleAlias: {
+      type: String,
+      required: true,
+    },
+    createdBy: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    updatedBy: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
       required: true,
     },
     password: {

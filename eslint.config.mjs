@@ -30,6 +30,22 @@ export default tseslint.config(
       'no-undef': 'off',
       'no-unused-expressions': 'error',
       'prefer-const': 'warn',
+
+      '@typescript-eslint/naming-convention': [
+        'error',
+        {
+          selector: 'variable',
+          format: ['camelCase', 'UPPER_CASE', 'PascalCase'],
+        },
+        {
+          selector: 'function',
+          format: ['camelCase'],
+        },
+        {
+          selector: 'class',
+          format: ['PascalCase'],
+        },
+      ],
     },
     languageOptions: {
       globals: {

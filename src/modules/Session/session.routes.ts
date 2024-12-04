@@ -1,19 +1,15 @@
 import { Router } from 'express';
-import { sessionController } from './session.controller';
 import validate from '@/middlewares/validate';
-import { sessionValidation } from './session.validation';
 import { authenticateJWT } from '@/common/passport/strategy';
+import { sessionController } from './session.controller';
+import { sessionValidation } from './session.validation';
 
-const sessionRoutes = Router();
+const router = Router();
 
-sessionRoutes.use(authenticateJWT);
+router.use(authenticateJWT);
 
-sessionRoutes.get('/all', sessionController.getAllSession);
-sessionRoutes.get('/', sessionController.getSession);
-sessionRoutes.delete(
-  '/:id',
-  validate(sessionValidation.deleteSession),
-  sessionController.deleteSession
-);
+router.get('/all', sessionController.getAllSession);
+router.get('/', sessionController.getSession);
+router.delete('/:id', validate(sessionValidation.deleteSession), sessionController.deleteSession);
 
-export default sessionRoutes;
+export default router;

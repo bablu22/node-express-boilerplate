@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import config from '@config/app.config';
 import mongoose from 'mongoose';
 import chalk from 'chalk';

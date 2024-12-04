@@ -2,9 +2,9 @@ import { Request } from 'express';
 import speakeasy from 'speakeasy';
 import qrcode from 'qrcode';
 import { BadRequestException, NotFoundException, UnauthorizedException } from '@common/utils/error';
-import User from '../User/user.model';
 import { refreshTokenSignOptions, signJwtToken } from '@/common/utils/jwt';
-import Session from '../Session/session.model';
+import Session from '../session/session.model';
+import User from '../user/user.model';
 
 const generateMFASetup = async (req: Request) => {
   const user = req.user;

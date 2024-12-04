@@ -1,25 +1,25 @@
 import { authenticateJWT } from '@/common/passport/strategy';
 import { Router } from 'express';
-import { mfaController } from './mfa.controller';
 import validate from '@/middlewares/validate';
+import { mfaController } from './mfa.controller';
 import { mfaValidation } from './mfa.validation';
 
-const mfaRoutes = Router();
+const router = Router();
 
-mfaRoutes.get('/setup', authenticateJWT, mfaController.generateMFASetup);
+router.get('/setup', authenticateJWT, mfaController.generateMFASetup);
 
-mfaRoutes.post(
+router.post(
   '/verify',
   validate(mfaValidation.verifyMFA),
   authenticateJWT,
   mfaController.verifyMFASetup
 );
-mfaRoutes.put('/revoke', authenticateJWT, mfaController.revokeMFASetup);
+router.put('/revoke', authenticateJWT, mfaController.revokeMFASetup);
 
-mfaRoutes.post(
+router.post(
   '/verify-login',
   validate(mfaValidation.verifyMFAForLogin),
   mfaController.verifyMFAForLogin
 );
 
-export default mfaRoutes;
+export default router;

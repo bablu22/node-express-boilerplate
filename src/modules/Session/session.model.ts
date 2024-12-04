@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
-import { ISession } from './session.interface';
 import { thirtyDaysFromNow } from '@/common/utils/date-time';
+import { ISession } from './session.interface';
 
 const sessionSchema = new Schema<ISession>({
   userId: {

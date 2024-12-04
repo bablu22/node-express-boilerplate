@@ -10,10 +10,17 @@ export interface UserPreferences {
 export interface IUser extends Document {
   firstName: string;
   lastName: string;
+  phone: string;
+  address: string;
+  isActive: boolean;
+  roleId: mongoose.Types.ObjectId;
+  roleAlias: string;
   email: string;
   password: string;
   isEmailVerified: boolean;
   userPreferences: UserPreferences;
+  createdBy: mongoose.Types.ObjectId;
+  updatedBy: mongoose.Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
 

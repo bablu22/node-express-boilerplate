@@ -1,5 +1,4 @@
 import { Request } from 'express';
-import User, { VerificationCode } from '../User/user.model';
 import {
   BadRequestException,
   HttpException,
@@ -20,9 +19,10 @@ import { renderEjs } from '@/common/utils/renderEjs';
 import { emailQueue, emailQueueName } from '@/jobs/Email';
 import { logger } from '@/common/utils/logger';
 import { refreshTokenSignOptions, signJwtToken, verifyJwtToken } from '@/common/utils/jwt';
-import Session from '../Session/session.model';
+import Session from '../session/session.model';
 import { HTTPSTATUS } from '@/config/http.config';
 import { hashValue } from '@/common/utils/bcrypt';
+import User, { VerificationCode } from '../user/user.model';
 
 const register = async (req: Request) => {
   const { firstName, lastName, email, password } = req.body;

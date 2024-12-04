@@ -1,6 +1,5 @@
 import asyncHandler from '@/middlewares/asyncHandler';
 import { RequestHandler } from 'express';
-import { authService } from './auth.service';
 import { HTTPSTATUS } from '@/config/http.config';
 import sendResponse from '@/common/utils/sendResponse';
 import {
@@ -10,6 +9,7 @@ import {
   setAuthenticationCookies,
 } from '@/common/utils/cookie';
 import { UnauthorizedException } from '@/common/utils/error';
+import { authService } from './auth.service';
 
 const register: RequestHandler = asyncHandler(async (req, res) => {
   const result = await authService.register(req);

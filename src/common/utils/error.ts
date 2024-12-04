@@ -31,3 +31,15 @@ export class HttpException extends AppError {
     super(message, statusCode, errorCode);
   }
 }
+
+export class ForbiddenException extends AppError {
+  constructor(message = 'Forbidden', errorCode?: ErrorCode) {
+    super(message, HTTPSTATUS.FORBIDDEN, errorCode || ErrorCode.FORBIDDEN);
+  }
+}
+
+export class MongoError extends AppError {
+  constructor(message = 'MongoError', errorCode?: ErrorCode) {
+    super(message, HTTPSTATUS.INTERNAL_SERVER_ERROR, errorCode || ErrorCode.INTERNAL_SERVER_ERROR);
+  }
+}

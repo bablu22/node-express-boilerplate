@@ -1,7 +1,7 @@
 import asyncHandler from '@/middlewares/asyncHandler';
 import { RequestHandler } from 'express';
-import { sessionService } from './session.service';
 import sendResponse from '@/common/utils/sendResponse';
+import { sessionService } from './session.service';
 
 const getAllSession: RequestHandler = asyncHandler(async (req, res) => {
   const userId = req.user?.id;

@@ -1,8 +1,8 @@
 import jwt, { SignOptions, VerifyOptions } from 'jsonwebtoken';
 
 import config from '@/config/app.config';
-import { IUser } from '@/modules/User/user.interface';
-import { ISession } from '@/modules/Session/session.interface';
+import { IUser } from '@/modules/user/user.interface';
+import { ISession } from '@/modules/session/session.interface';
 
 export type AccessTPayload = {
   userId: IUser['_id'];
