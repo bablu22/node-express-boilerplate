@@ -22,12 +22,12 @@ const options: StrategyOptionsWithRequest = {
         );
       }
       return accessToken;
-    },
+    }
   ]),
   secretOrKey: config.JWT.SECRET,
   audience: ['user'],
   algorithms: ['HS256'],
-  passReqToCallback: true,
+  passReqToCallback: true
 };
 
 export const setupJwtStrategy = (passport: PassportStatic) => {

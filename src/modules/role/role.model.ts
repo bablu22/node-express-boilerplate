@@ -1,8 +1,8 @@
-import { IRole } from './role.interface';
-import mongoose from 'mongoose';
+import mongoose, { Schema, Types, model } from 'mongoose';
+import { IRole, IRoleModel } from './role.interface';
 import { MongoError } from '@/common/utils/error';
 
-const schema = new mongoose.Schema<IRole>(
+const RoleSchema = new Schema<IRole, IRoleModel>(
   {
     name: { type: String, unique: true, required: true },
     isSuperAdmin: { type: Boolean },
@@ -11,34 +11,36 @@ const schema = new mongoose.Schema<IRole>(
     permissions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Permission' }],
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
       required: true,
-      default: '000000000000',
+      default: new Types.ObjectId('000000000000000000000000')
     },
     updatedBy: {
       type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
       required: true,
-      default: '000000000000',
-    },
+      default: new Types.ObjectId('000000000000000000000000')
+    }
   },
   { timestamps: true }
 );
 
 // text index for name
-schema.index({ name: 'text' });
+RoleSchema.index({ name: 'text' });
 
 // index for createdAt and updatedAt
-schema.index({ createdAt: 1 });
-schema.index({ updatedAt: 1 });
+RoleSchema.index({ createdAt: 1 });
+RoleSchema.index({ updatedAt: 1 });
 
 // index for isSuperAdmin and isAdmin
-schema.index({ isSuperAdmin: 1 });
-schema.index({ isAdmin: 1 });
+RoleSchema.index({ isSuperAdmin: 1 });
+RoleSchema.index({ isAdmin: 1 });
 
-schema.post<IRole>('save', (error: any, doc: IRole, next: (err?: Error) => void) => {
-  if (error.name === 'MongoError' && error.code === 11000) {
+RoleSchema.post<IRole>('save', (error: any, doc: IRole, next: (err?: Error) => void) => {
+  if (error.name === 'MongoServerError' && error.code === 11000) {
     // Check for duplicate key error
     if (error.message.includes('duplicate key error')) {
-      const errorMessage = `Name already exists`;
+      const errorMessage = `Role with name ${doc.name} already exists`;
       next(new MongoError(errorMessage));
     } else {
       next(new MongoError(error.message));
@@ -48,6 +50,7 @@ schema.post<IRole>('save', (error: any, doc: IRole, next: (err?: Error) => void)
   }
 });
 
-const Role = mongoose.model<IRole>('Role', schema);
+export const RoleModelName = 'Role';
 
+const Role = model<IRole, IRoleModel>('Role', RoleSchema);
 export default Role;

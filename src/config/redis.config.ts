@@ -5,13 +5,13 @@ import chalk from 'chalk';
 
 export const redisConfig = {
   host: config.REDIS.HOST || 'localhost',
-  port: parseInt(config.REDIS.PORT) || 6379,
+  port: parseInt(config.REDIS.PORT) || 6379
   // password: config.REDIS.PASSWORD || undefined,
 };
 const redisUrl = 'redis://localhost:6379';
 
 export const redisConnection = new IORedis(redisUrl, {
-  maxRetriesPerRequest: null,
+  maxRetriesPerRequest: null
 });
 
 export async function validateRedisConnection() {

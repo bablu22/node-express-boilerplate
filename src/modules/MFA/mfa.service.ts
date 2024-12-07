@@ -15,7 +15,7 @@ const generateMFASetup = async (req: Request) => {
 
   if (user.userPreferences.enable2FA) {
     return {
-      message: 'MFA already enabled',
+      message: 'MFA already enabled'
     };
   }
 
@@ -31,14 +31,14 @@ const generateMFASetup = async (req: Request) => {
     secret: secretKey,
     label: `${user.firstName} ${user.lastName}`,
     issuer: 'squeezy.com',
-    encoding: 'base32',
+    encoding: 'base32'
   });
 
   const qrImageUrl = await qrcode.toDataURL(url);
 
   return {
     qrImageUrl,
-    secretKey,
+    secretKey
   };
 };
 
@@ -54,15 +54,15 @@ const verifyMFASetup = async (req: Request) => {
     return {
       message: 'MFA is already enabled',
       userPreferences: {
-        enable2FA: user.userPreferences.enable2FA,
-      },
+        enable2FA: user.userPreferences.enable2FA
+      }
     };
   }
 
   const isValid = speakeasy.totp.verify({
     secret: secretKey,
     encoding: 'base32',
-    token: code,
+    token: code
   });
 
   if (!isValid) {
@@ -74,8 +74,8 @@ const verifyMFASetup = async (req: Request) => {
 
   return {
     userPreferences: {
-      enable2FA: user.userPreferences.enable2FA,
-    },
+      enable2FA: user.userPreferences.enable2FA
+    }
   };
 };
 
@@ -90,8 +90,8 @@ const revokeMFASetup = async (req: Request) => {
     return {
       message: 'MFA is not enabled',
       userPreferences: {
-        enable2FA: user.userPreferences.enable2FA,
-      },
+        enable2FA: user.userPreferences.enable2FA
+      }
     };
   }
 
@@ -101,8 +101,8 @@ const revokeMFASetup = async (req: Request) => {
 
   return {
     userPreferences: {
-      enable2FA: user.userPreferences.enable2FA,
-    },
+      enable2FA: user.userPreferences.enable2FA
+    }
   };
 };
 
@@ -123,7 +123,7 @@ const verifyMFAForLogin = async (req: Request) => {
   const isValid = speakeasy.totp.verify({
     secret: user.userPreferences.twoFactorSecret!,
     encoding: 'base32',
-    token: code,
+    token: code
   });
 
   if (!isValid) {
@@ -133,17 +133,17 @@ const verifyMFAForLogin = async (req: Request) => {
   //sign access token & refresh token
   const session = await Session.create({
     userId: user._id,
-    userAgent,
+    userAgent
   });
 
   const accessToken = signJwtToken({
     userId: user._id,
-    sessionId: session._id,
+    sessionId: session._id
   });
 
   const refreshToken = signJwtToken(
     {
-      sessionId: session._id,
+      sessionId: session._id
     },
     refreshTokenSignOptions
   );
@@ -151,7 +151,7 @@ const verifyMFAForLogin = async (req: Request) => {
   return {
     user,
     accessToken,
-    refreshToken,
+    refreshToken
   };
 };
 
@@ -159,5 +159,5 @@ export const mfaService = {
   generateMFASetup,
   verifyMFASetup,
   revokeMFASetup,
-  verifyMFAForLogin,
+  verifyMFAForLogin
 };

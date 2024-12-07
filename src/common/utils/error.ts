@@ -1,6 +1,23 @@
-import { HTTPSTATUS, HttpStatusCode } from '../../config/http.config';
-import ErrorCode from '@/common/enums/error-code.enums';
+import { HTTPSTATUS } from '@/config/http.config';
 import { AppError } from './AppError';
+import ErrorCode from '@/common/enums/error-code.enums';
+
+export class GeneralError extends Error {
+  constructor(message: string) {
+    super();
+    this.message = message;
+  }
+
+  getCode() {
+    return 400;
+  }
+}
+
+export class HttpException extends AppError {
+  constructor(message: string, status: number, errorCode: ErrorCode, details?: any) {
+    super(message, status, errorCode, details);
+  }
+}
 
 export class NotFoundException extends AppError {
   constructor(message = 'Resource not found', errorCode?: ErrorCode) {
@@ -9,8 +26,8 @@ export class NotFoundException extends AppError {
 }
 
 export class BadRequestException extends AppError {
-  constructor(message = 'Bad Request', errorCode?: ErrorCode) {
-    super(message, HTTPSTATUS.BAD_REQUEST, errorCode);
+  constructor(message = 'Bad Request', errorCode?: ErrorCode, details?: any) {
+    super(message, HTTPSTATUS.BAD_REQUEST, errorCode, details);
   }
 }
 
@@ -26,12 +43,6 @@ export class InternalServerException extends AppError {
   }
 }
 
-export class HttpException extends AppError {
-  constructor(message = 'Http Exception Error', statusCode: HttpStatusCode, errorCode?: ErrorCode) {
-    super(message, statusCode, errorCode);
-  }
-}
-
 export class ForbiddenException extends AppError {
   constructor(message = 'Forbidden', errorCode?: ErrorCode) {
     super(message, HTTPSTATUS.FORBIDDEN, errorCode || ErrorCode.FORBIDDEN);
@@ -39,7 +50,12 @@ export class ForbiddenException extends AppError {
 }
 
 export class MongoError extends AppError {
-  constructor(message = 'MongoError', errorCode?: ErrorCode) {
-    super(message, HTTPSTATUS.INTERNAL_SERVER_ERROR, errorCode || ErrorCode.INTERNAL_SERVER_ERROR);
+  constructor(message = 'MongoError', errorCode?: ErrorCode, details?: any) {
+    super(
+      message,
+      HTTPSTATUS.INTERNAL_SERVER_ERROR,
+      errorCode || ErrorCode.INTERNAL_SERVER_ERROR,
+      details
+    );
   }
 }

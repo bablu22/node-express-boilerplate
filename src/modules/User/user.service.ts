@@ -6,4 +6,10 @@ const findUserById = async (id: string) => {
   return user || null;
 };
 
-export const userService = { findUserById };
+const createUser = async (data: any) => {
+  const user = await User.create(data);
+
+  return user;
+};
+
+export const userService = { findUserById, createUser };

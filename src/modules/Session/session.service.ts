@@ -5,19 +5,19 @@ const getAllSessions = async (userId: string) => {
   const sessions = await Session.find(
     {
       userId,
-      expiredAt: { $gt: Date.now() },
+      expiredAt: { $gt: Date.now() }
     },
     {
       _id: 1,
       userId: 1,
       userAgent: 1,
       createdAt: 1,
-      expiredAt: 1,
+      expiredAt: 1
     },
     {
       sort: {
-        createdAt: -1,
-      },
+        createdAt: -1
+      }
     }
   );
 
@@ -38,7 +38,7 @@ const getSessionById = async (sessionId: string) => {
 const deleteSession = async (sessionId: string, userId: string) => {
   const deletedSession = await Session.findByIdAndDelete({
     _id: sessionId,
-    userId: userId,
+    userId: userId
   });
   if (!deletedSession) {
     throw new NotFoundException('Session not found');
@@ -50,5 +50,5 @@ const deleteSession = async (sessionId: string, userId: string) => {
 export const sessionService = {
   getAllSessions,
   getSessionById,
-  deleteSession,
+  deleteSession
 };

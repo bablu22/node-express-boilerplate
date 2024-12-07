@@ -10,13 +10,23 @@ import chalk from 'chalk';
 import { validateRedisConnection } from './config/redis.config';
 import router from '@routes/index';
 import notFound from '@middlewares/404';
-import { errorHandler } from '@middlewares/errorHandler';
 import { logger } from '@common/utils/logger';
 import passport from '@middlewares/passport';
+import errorHandler from '@middlewares/errorHandler';
+import { handleError, handleRequest } from '@middlewares/auth';
+import compression from 'compression';
+import rateLimit from 'express-rate-limit';
 
 const app = express();
 const BASE_PATH = config.BASE_PATH;
 
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes window
+  max: 1000 // Limit each IP to 1000 requests per window
+});
+
+// General middleware initialization
+app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -24,16 +34,22 @@ app.use(passport.initialize());
 app.use(
   cors({
     origin: config.APP_ORIGIN,
-    credentials: true,
+    credentials: true
   })
 );
 
+app.use(limiter);
+app.use(handleRequest);
+
+// Routes Setup
 app.use('/', appRoutes);
 app.use(`${BASE_PATH}/`, router);
 
-// Middlewares
 app.use(notFound);
 app.use(errorHandler);
+app.use(handleError);
+
+// Log all global incoming requests
 app.use((req, res, next) => {
   logger.info(`[Global] Incoming request: ${req.method} ${req.url}`);
   next();

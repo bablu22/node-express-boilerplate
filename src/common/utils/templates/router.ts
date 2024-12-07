@@ -22,7 +22,7 @@ router.patch(
   {{ModuleName}}Controller.update{{ModuleName}}
 );
 
-router.delete('/:id', {{ModuleName}}Controller.delete{{ModuleName}});
+router.delete('/delete/:id', {{ModuleName}}Controller.delete{{ModuleName}});
 
 export default router;
 `;

@@ -34,7 +34,7 @@ export const utils = {
     isValidModuleName: (input: string): boolean => {
       const moduleNameRegex = /^[a-zA-Z][a-zA-Z0-9]*$/;
       return moduleNameRegex.test(input);
-    },
+    }
   },
 
   formatName: {
@@ -50,8 +50,8 @@ export const utils = {
      * @param input - Input string to convert
      * @returns UpperCamelCased string
      */
-    toUpperCamelCase: (input: string): string => upperFirst(camelCase(input)),
-  },
+    toUpperCamelCase: (input: string): string => upperFirst(camelCase(input))
+  }
 };
 
 /**
@@ -73,14 +73,14 @@ async function generateModule(): Promise<void> {
             return true;
           }
           return 'Module name must start with a letter and contain only alphanumeric characters.';
-        },
+        }
       },
       {
         type: 'input',
         name: 'folderName',
         message: 'Enter the folder name (optional, press enter to use module name):',
-        default: (answers) => answers.moduleName,
-      },
+        default: (answers) => answers.moduleName
+      }
     ]);
 
     // Format names for consistency
@@ -106,7 +106,7 @@ async function generateModule(): Promise<void> {
       { name: 'service', template: serviceTemplate },
       { name: 'model', template: modelTemplate },
       { name: 'routes', template: routesTemplate },
-      { name: 'validation', template: validationTemplate },
+      { name: 'validation', template: validationTemplate }
     ];
 
     // Create module folder

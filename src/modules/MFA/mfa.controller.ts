@@ -10,7 +10,7 @@ const generateMFASetup: RequestHandler = asyncHandler(async (req, res) => {
     success: true,
     statusCode: 200,
     message: 'Scan the QR code or use the setup key.',
-    data: result,
+    data: result
   });
 });
 
@@ -21,7 +21,7 @@ const verifyMFASetup: RequestHandler = asyncHandler(async (req, res) => {
     success: true,
     statusCode: 200,
     message: 'MFA setup successfully.',
-    data: result,
+    data: result
   });
 });
 
@@ -32,7 +32,7 @@ const revokeMFASetup: RequestHandler = asyncHandler(async (req, res) => {
     success: true,
     statusCode: 200,
     message: 'MFA revoked successfully.',
-    data: result,
+    data: result
   });
 });
 
@@ -43,7 +43,7 @@ const verifyMFAForLogin: RequestHandler = asyncHandler(async (req, res) => {
     success: true,
     statusCode: 200,
     message: 'MFA verified successfully.',
-    data: result,
+    data: result
   });
 });
 
@@ -51,5 +51,5 @@ export const mfaController = {
   generateMFASetup,
   verifyMFASetup,
   revokeMFASetup,
-  verifyMFAForLogin,
+  verifyMFAForLogin
 };

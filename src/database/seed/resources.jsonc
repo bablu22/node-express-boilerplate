@@ -1,0 +1,57 @@
+[
+  {
+    "name": "/api/v1/permission/:id",
+    "alias": "Get Permission By ID",
+    "type": "api"
+  },
+  {
+    "name": "/api/v1/permission/all",
+    "alias": "Get All Permissions",
+    "type": "api"
+  },
+  {
+    "name": "/api/v1/permission/delete/:id",
+    "alias": "Delete Permission",
+    "type": "api"
+  },
+  {
+    "name": "/api/v1/resource/:id",
+    "alias": "Get Resource By ID",
+    "type": "api"
+  },
+  {
+    "name": "/api/v1/resource/all",
+    "alias": "Get All Resources",
+    "type": "api"
+  },
+  {
+    "name": "/api/v1/resource/delete/:id",
+    "alias": "Delete Resource",
+    "type": "api"
+  },
+  {
+    "name": "/api/v1/role/:id",
+    "alias": "Get Role By ID",
+    "type": "api"
+  },
+  {
+    "name": "/api/v1/role/all",
+    "alias": "Get All Roles",
+    "type": "api"
+  },
+  {
+    "name": "/api/v1/role/create",
+    "alias": "Create Role",
+    "type": "api"
+  },
+  {
+    "name": "/api/v1/role/delete/:id",
+    "alias": "Delete Role",
+    "type": "api"
+  },
+  {
+    "name": "/api/v1/role/update/:id",
+    "alias": "Update Role",
+    "type": "api"
+  }
+]

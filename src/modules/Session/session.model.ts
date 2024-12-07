@@ -7,21 +7,21 @@ const sessionSchema = new Schema<ISession>({
     type: Schema.Types.ObjectId,
     ref: 'User',
     index: true,
-    required: true,
+    required: true
   },
   userAgent: {
     type: String,
-    required: false,
+    required: false
   },
   createdAt: {
     type: Date,
-    default: Date.now,
+    default: Date.now
   },
   expiredAt: {
     type: Date,
     required: true,
-    default: thirtyDaysFromNow,
-  },
+    default: thirtyDaysFromNow
+  }
 });
 
 const Session = mongoose.model<ISession>('Session', sessionSchema);

@@ -1,0 +1,90 @@
+[
+  {
+    "resourceName": "/api/v1/permission/:id",
+    "resourceAlias": "Get Permission By ID",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/api/v1/permission/all",
+    "resourceAlias": "Get All Permissions",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/api/v1/permission/delete/:id",
+    "resourceAlias": "Delete Permission",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/api/v1/resource/:id",
+    "resourceAlias": "Get Resource By ID",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/api/v1/resource/all",
+    "resourceAlias": "Get All Resources",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/api/v1/resource/delete/:id",
+    "resourceAlias": "Delete Resource",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/api/v1/role/:id",
+    "resourceAlias": "Get Role By ID",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/api/v1/role/all",
+    "resourceAlias": "Get All Roles",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/api/v1/role/create",
+    "resourceAlias": "Create Role",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/api/v1/role/delete/:id",
+    "resourceAlias": "Delete Role",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/api/v1/role/update/:id",
+    "resourceAlias": "Update Role",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  }
+]

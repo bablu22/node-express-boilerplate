@@ -27,7 +27,7 @@ const loadRoutes = async (): Promise<ModuleRoute[]> => {
 
         moduleRoutes.push({
           path: `/${moduleName}`,
-          routes,
+          routes
         });
 
         console.info(
@@ -38,7 +38,7 @@ const loadRoutes = async (): Promise<ModuleRoute[]> => {
           moduleName,
           routesFilePath,
           error: error.message,
-          stack: error.stack,
+          stack: error.stack
         });
       }
     } else {
@@ -63,7 +63,7 @@ loadRoutes()
   .catch((error) => {
     console.error('❌ Critical error during route loading:', {
       message: error.message,
-      stack: error.stack,
+      stack: error.stack
     });
   });
 

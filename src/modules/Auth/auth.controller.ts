@@ -6,7 +6,7 @@ import {
   clearAuthenticationCookies,
   getAccessTokenCookieOptions,
   getRefreshTokenCookieOptions,
-  setAuthenticationCookies,
+  setAuthenticationCookies
 } from '@/common/utils/cookie';
 import { UnauthorizedException } from '@/common/utils/error';
 import { authService } from './auth.service';
@@ -18,7 +18,7 @@ const register: RequestHandler = asyncHandler(async (req, res) => {
     success: true,
     statusCode: HTTPSTATUS.OK,
     message: 'User registered successfully! Please check your email for verification.',
-    data: result,
+    data: result
   });
 });
 
@@ -30,7 +30,7 @@ const verifyEmail: RequestHandler = asyncHandler(async (req, res) => {
     success: true,
     statusCode: HTTPSTATUS.OK,
     message: 'Email verified successfully',
-    data: result,
+    data: result
   });
 });
 
@@ -44,8 +44,8 @@ const login: RequestHandler = asyncHandler(async (req, res) => {
       message: 'User logged in successfully',
       data: {
         user,
-        mfaRequired,
-      },
+        mfaRequired
+      }
     });
   }
 
@@ -59,8 +59,8 @@ const login: RequestHandler = asyncHandler(async (req, res) => {
       user,
       accessToken,
       refreshToken,
-      mfaRequired,
-    },
+      mfaRequired
+    }
   });
 });
 
@@ -73,7 +73,7 @@ const logout: RequestHandler = asyncHandler(async (req, res) => {
     success: true,
     statusCode: HTTPSTATUS.OK,
     message: 'User logged out successfully',
-    data: null,
+    data: null
   });
 });
 
@@ -96,7 +96,7 @@ const refreshToken: RequestHandler = asyncHandler(async (req, res) => {
     success: true,
     statusCode: HTTPSTATUS.OK,
     message: 'Token refreshed successfully',
-    data: null,
+    data: null
   });
 });
 
@@ -107,7 +107,7 @@ const forgotPassword: RequestHandler = asyncHandler(async (req, res) => {
     success: true,
     statusCode: HTTPSTATUS.OK,
     message: 'Email sent successfully',
-    data: result,
+    data: result
   });
 });
 
@@ -118,7 +118,7 @@ const resetPassword: RequestHandler = asyncHandler(async (req, res) => {
     success: true,
     statusCode: HTTPSTATUS.OK,
     message: 'Password reset successfully',
-    data: result,
+    data: result
   });
 });
 
@@ -129,5 +129,5 @@ export const authController = {
   logout,
   refreshToken,
   forgotPassword,
-  resetPassword,
+  resetPassword
 };

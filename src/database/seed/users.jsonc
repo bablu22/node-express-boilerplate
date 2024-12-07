@@ -1,0 +1,35 @@
+[
+  {
+    "firstName": "Super",
+    "lastName": "Admin",
+    "username": "superadmin",
+    "address": "Bangladesh",
+    "phone": "01000000001",
+    "email": "superadmin@gmail.com",
+    "roleId": "",
+    "roleAlias": "Super Admin",
+    "password": "password"
+  },
+  {
+    "firstName": "Admin",
+    "lastName": "Admin",
+    "username": "admin",
+    "address": "Bangladesh",
+    "phone": "01000000002",
+    "email": "admin@gmail.com",
+    "roleId": "",
+    "roleAlias": "Admin",
+    "password": "password"
+  },
+  {
+    "firstName": "User",
+    "lastName": "User",
+    "username": "user",
+    "address": "Bangladesh",
+    "phone": "01000000003",
+    "email": "user@gmail.com",
+    "roleId": "",
+    "roleAlias": "User",
+    "password": "password"
+  }
+]

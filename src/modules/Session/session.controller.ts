@@ -12,15 +12,15 @@ const getAllSession: RequestHandler = asyncHandler(async (req, res) => {
   const modifySessions = sessions.map((session) => ({
     ...session.toObject(),
     ...(session.id === sessionId && {
-      isCurrent: true,
-    }),
+      isCurrent: true
+    })
   }));
 
   sendResponse(res, {
     success: true,
     statusCode: 200,
     message: 'Retrieved all sessions successfully',
-    data: modifySessions,
+    data: modifySessions
   });
 });
 
@@ -33,7 +33,7 @@ const getSession: RequestHandler = asyncHandler(async (req, res) => {
     success: true,
     statusCode: 200,
     message: 'Retrieved session successfully',
-    data: user,
+    data: user
   });
 });
 
@@ -45,12 +45,12 @@ const deleteSession: RequestHandler = asyncHandler(async (req, res) => {
     success: true,
     statusCode: 200,
     message: 'Session deleted successfully',
-    data: deletedSession,
+    data: deletedSession
   });
 });
 
 export const sessionController = {
   getAllSession,
   getSession,
-  deleteSession,
+  deleteSession
 };

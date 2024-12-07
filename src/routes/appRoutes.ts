@@ -7,7 +7,7 @@ router.get('/', (_req: Request, res: Response) => {
     status: 'OK',
     message: 'Service is healthy',
     timestamp: new Date().toISOString(),
-    uptime: process.uptime(),
+    uptime: process.uptime()
   });
 });
 
@@ -16,7 +16,7 @@ router.get('/health', (_req: Request, res: Response) => {
     status: 'OK',
     message: 'Service is healthy',
     timestamp: new Date().toISOString(),
-    uptime: process.uptime(),
+    uptime: process.uptime()
   });
 });
 

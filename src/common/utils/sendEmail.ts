@@ -8,14 +8,14 @@ export const sendEmail = async (to: string, subject: string, html: string) => {
     secure: false,
     auth: {
       user: config.SMTP.SMTPUSER,
-      pass: config.SMTP.SMTPPASS,
-    },
+      pass: config.SMTP.SMTPPASS
+    }
   });
 
   await transporter.sendMail({
     from: '<no-reply@' + config.SMTP.SMTPHOST + '>',
     to,
     subject,
-    html,
+    html
   });
 };

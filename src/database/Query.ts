@@ -1,20 +1,19 @@
-import { FilterQuery, Model, Query, Document, Types } from 'mongoose';
+import { FilterQuery, Model, Query, Document, Types, PopulateOptions } from 'mongoose';
 
 interface BaseDocument extends Document {
   _id: Types.ObjectId;
 }
 
-// Extend QueryOptions to be more flexible
 export interface QueryOptions {
   searchTerm?: string | null;
   sort?: string | null;
   limit?: number | null;
   page?: number | null;
   fields?: string | null;
+  populate?: string | string[] | PopulateOptions | PopulateOptions[];
   [key: string]: unknown;
 }
 
-// Pagination result type
 interface PaginationResult {
   page: number;
   limit: number;
@@ -22,10 +21,9 @@ interface PaginationResult {
   totalPage: number;
 }
 
-// Result type for query execution
 interface QueryResult<T extends BaseDocument> {
   data: T[];
-  pagination: PaginationResult;
+  meta: PaginationResult;
 }
 
 class QueryBuilder<T extends BaseDocument> {
@@ -33,12 +31,14 @@ class QueryBuilder<T extends BaseDocument> {
   private queryOptions: QueryOptions;
   private baseQuery: FilterQuery<T>;
   private query: Query<T[], T>;
+  private populateOptions?: string | string[] | PopulateOptions | PopulateOptions[];
 
   constructor(model: Model<T>, queryOptions: QueryOptions = {}) {
     this.model = model;
     this.queryOptions = this.sanitizeQueryOptions(queryOptions);
     this.baseQuery = {};
     this.query = this.model.find();
+    this.populateOptions = this.queryOptions.populate;
   }
 
   /**
@@ -70,8 +70,8 @@ class QueryBuilder<T extends BaseDocument> {
       this.baseQuery.$or = searchableFields.map((field) => ({
         [field]: {
           $regex: String(searchTerm).trim(),
-          $options: 'i',
-        },
+          $options: 'i'
+        }
       })) as FilterQuery<T>[];
     }
 
@@ -82,7 +82,14 @@ class QueryBuilder<T extends BaseDocument> {
    * Apply filtering based on query parameters
    */
   filter(): this {
-    const excludeFields: (keyof QueryOptions)[] = ['searchTerm', 'sort', 'limit', 'page', 'fields'];
+    const excludeFields: (keyof QueryOptions)[] = [
+      'searchTerm',
+      'sort',
+      'limit',
+      'page',
+      'fields',
+      'populate'
+    ];
 
     // Create a copy of query options without excluded fields
     const filterQuery = Object.fromEntries(
@@ -145,11 +152,25 @@ class QueryBuilder<T extends BaseDocument> {
   }
 
   /**
+   * Populate related documents
+   */
+  populate(): this {
+    if (this.populateOptions) {
+      if (typeof this.populateOptions === 'string') {
+        this.query = this.query.populate({ path: this.populateOptions });
+      } else {
+        this.query = this.query.populate(this.populateOptions);
+      }
+    }
+    return this;
+  }
+
+  /**
    * Apply all query modifications
    */
   applyModifications(searchFields: (keyof T)[] = []): this {
     this.query = this.model.find(this.baseQuery);
-    return this.search(searchFields).filter().sort().fields().paginate();
+    return this.search(searchFields).filter().sort().fields().populate().paginate();
   }
 
   /**
@@ -162,7 +183,7 @@ class QueryBuilder<T extends BaseDocument> {
     // Execute query and count total documents
     const [data, total] = await Promise.all([
       this.query.exec(),
-      this.model.countDocuments(this.baseQuery),
+      this.model.countDocuments(this.baseQuery)
     ]);
 
     const page = this.queryOptions.page ? Number(this.queryOptions.page) : 1;
@@ -171,12 +192,12 @@ class QueryBuilder<T extends BaseDocument> {
 
     return {
       data,
-      pagination: {
+      meta: {
         page,
         limit,
         total,
-        totalPage,
-      },
+        totalPage
+      }
     };
   }
 
@@ -186,18 +207,9 @@ class QueryBuilder<T extends BaseDocument> {
   advancedFilter(filterOperators: FilterQuery<T>): this {
     this.baseQuery = {
       ...this.baseQuery,
-      ...filterOperators,
+      ...filterOperators
     };
 
-    return this;
-  }
-
-  /**
-   * Populate related documents
-   * @param paths - Paths to populate
-   */
-  populate(paths: string | string[]): this {
-    this.query = this.query.populate(paths);
     return this;
   }
 }

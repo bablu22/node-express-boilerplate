@@ -21,7 +21,14 @@ export const logger = createLogger({
       filename: '%DATE%-app.log',
       datePattern: 'YYYY-MM-DD',
       maxSize: '20m',
-      maxFiles: '14d',
-    }),
-  ],
+      maxFiles: '14d'
+    })
+  ]
 });
+
+// Define logger interface
+export interface ILogger {
+  info: (message: string, metadata?: object) => void;
+  error: (message: string, metadata?: object) => void;
+  debug: (message: string, metadata?: object) => void;
+}

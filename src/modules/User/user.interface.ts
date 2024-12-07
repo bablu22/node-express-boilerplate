@@ -10,6 +10,7 @@ export interface UserPreferences {
 export interface IUser extends Document {
   firstName: string;
   lastName: string;
+  username: string;
   phone: string;
   address: string;
   isActive: boolean;

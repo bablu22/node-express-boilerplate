@@ -3,11 +3,12 @@ import { compareValue, hashValue } from '@common/utils/bcrypt';
 import mongoose from 'mongoose';
 import { generateUniqueCode } from '@/common/utils/uuid';
 import { IUser, IVerificationCode, UserPreferences } from './user.interface';
+import { MongoError } from '@/common/utils/error';
 
 const userPreferencesSchema = new Schema<UserPreferences>({
   enable2FA: { type: Boolean, default: false },
   emailNotification: { type: Boolean, default: true },
-  twoFactorSecret: { type: String, required: false },
+  twoFactorSecret: { type: String, required: false }
 });
 
 const verificationCodeSchema = new Schema<IVerificationCode>({
@@ -15,91 +16,99 @@ const verificationCodeSchema = new Schema<IVerificationCode>({
     type: Schema.Types.ObjectId,
     ref: 'User',
     index: true,
-    required: true,
+    required: true
   },
   code: {
     type: String,
     unique: true,
     required: true,
-    default: generateUniqueCode,
+    default: generateUniqueCode
   },
   type: {
     type: String,
-    required: true,
+    required: true
   },
   createdAt: {
     type: Date,
-    default: Date.now,
+    default: Date.now
   },
   expiresAt: {
     type: Date,
-    required: true,
-  },
+    required: true
+  }
 });
 
 const userSchema = new Schema<IUser>(
   {
     firstName: {
       type: String,
-      required: true,
+      required: true
     },
     lastName: {
       type: String,
-      required: true,
+      required: true
+    },
+    username: {
+      type: String,
+      unique: true,
+      required: true
     },
     email: {
       type: String,
       unique: true,
-      required: true,
+      required: true
     },
     phone: {
       type: String,
       unique: true,
       required: false,
+      index: true
     },
     address: {
       type: String,
-      required: false,
+      required: false
     },
     isActive: {
       type: Boolean,
-      default: true,
+      default: true
     },
     roleId: {
       type: Schema.Types.ObjectId,
       ref: 'Role',
-      required: true,
+      required: true
     },
     roleAlias: {
       type: String,
-      required: true,
+      required: true
     },
     createdBy: {
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: true,
+      default: new mongoose.Types.ObjectId('000000000000000000000000')
     },
     updatedBy: {
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: true,
+      default: new mongoose.Types.ObjectId('000000000000000000000000')
     },
     password: {
       type: String,
-      required: true,
+      required: true
     },
     isEmailVerified: {
       type: Boolean,
-      default: false,
+      default: false
     },
     userPreferences: {
       type: userPreferencesSchema,
-      default: {},
-    },
+      default: {}
+    }
   },
   {
     timestamps: true,
-    toJSON: {},
+    toJSON: {}
   }
 );
 
@@ -109,6 +118,17 @@ userSchema.methods.toJSON = function () {
   return user;
 };
 
+userSchema.index({ username: 'text' });
+userSchema.index({ email: 'text' });
+
+userSchema.set('toJSON', {
+  transform: function (doc, ret) {
+    delete ret.password;
+    delete ret.userPreferences.twoFactorSecret;
+    return ret;
+  }
+});
+
 userSchema.pre<IUser>('save', async function (next) {
   if (this.isModified('password')) {
     this.password = await hashValue(this.password);
@@ -116,19 +136,25 @@ userSchema.pre<IUser>('save', async function (next) {
   next();
 });
 
+userSchema.post<IUser>('save', (error: any, doc: IUser, next: (err?: Error) => void) => {
+  if (error.name === 'MongoServerError' && error.code === 11000) {
+    // Check for duplicate key error
+    if (error.message.includes('duplicate key error')) {
+      const errorMessage = `User with ${error.message.match(/"(.+?)"/g).join(', ')} already exists`;
+      next(new MongoError(errorMessage));
+    } else {
+      next(new MongoError(error.message));
+    }
+  } else {
+    next();
+  }
+});
+
 userSchema.methods.comparePassword = async function (value: string) {
   return compareValue(value, this.password);
 };
 
-userSchema.set('toJSON', {
-  transform: function (doc, ret) {
-    delete ret.password;
-    delete ret.userPreferences.twoFactorSecret;
-    return ret;
-  },
-});
-
-const User = mongoose.model<IUser>('User', userSchema);
+const User = mongoose.model<IUser>('User', userSchema, 'users');
 
 export const VerificationCode = mongoose.model<IVerificationCode>(
   'VerificationCode',

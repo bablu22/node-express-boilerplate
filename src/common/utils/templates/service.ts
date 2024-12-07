@@ -5,34 +5,32 @@ import httpStatus from 'http-status';
 import { AppError } from '@/common/utils/AppError';
 import { I{{ModuleName}} } from './{{moduleName}}.interface';
 import { TMeta } from '@/common/utils/sendResponse';
-import QueryBuilder, { QueryOptions } from '@/database/Query';
+import QueryBuilder from '@/database/Query';
 
 
 const getAll{{ModuleName}} = async (
   query: Record<string, unknown>
 ): Promise<{ meta: TMeta; result: I{{ModuleName}}[] }> => {
+  const {{ModuleName}}SearchableFields: (keyof I{{ModuleName}})[] = ['name']; 
 
-  const {{ModuleName}}SearchableFields: (keyof I{{ModuleName}})[]  = ['name'];
+  const queryBuilder = new QueryBuilder<I{{ModuleName}}>({{ModuleName}}, {
+    ...query
+  });
 
-  const queryBuilder = new QueryBuilder<I{{ModuleName}}>(
-    {{ModuleName}},
-    query as QueryOptions
-  );
-
-  // Execute query pipeline
-  const { data, pagination } = await queryBuilder
-    .search({{ModuleName}}SearchableFields) // Apply search
-    .filter()                               // Apply filtering
-    .sort()                                 // Apply sorting
-    .paginate()                             // Apply pagination
-    .fields()                               // Apply field selection
-    .execute({{ModuleName}}SearchableFields); // Execute query
+  const { data, meta } = await queryBuilder
+    .search({{ModuleName}}SearchableFields)
+    .filter()
+    .sort()
+    .paginate()
+    .fields()
+    .execute();
 
   return {
-    meta: pagination,
+    meta,
     result: data,
   };
 };
+
 
 const get{{ModuleName}}ById = async (id: string): Promise<I{{ModuleName}}> => {
   const {{moduleName}} = await {{ModuleName}}.findOne({ _id: id });

@@ -11,7 +11,7 @@ interface EmailJobDataType {
 }
 
 export const emailQueue = new Queue(emailQueueName, {
-  connection: redisConnection,
+  connection: redisConnection
 });
 
 // Worker to process email jobs
@@ -22,6 +22,6 @@ export const queueWorker = new Worker(
     await sendEmail(data.to, data.subject, data.body);
   },
   {
-    connection: redisConnection,
+    connection: redisConnection
   }
 );

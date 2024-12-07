@@ -3,7 +3,7 @@ import {
   BadRequestException,
   HttpException,
   NotFoundException,
-  UnauthorizedException,
+  UnauthorizedException
 } from '@/common/utils/error';
 import ErrorCode from '@/common/enums/error-code.enums';
 import config from '@/config/app.config';
@@ -13,7 +13,7 @@ import {
   calculateExpirationDate,
   fortyFiveMinutesFromNow,
   ONE_DAY_IN_MS,
-  threeMinutesAgo,
+  threeMinutesAgo
 } from '@/common/utils/date-time';
 import { renderEjs } from '@/common/utils/renderEjs';
 import { emailQueue, emailQueueName } from '@/jobs/Email';
@@ -47,13 +47,13 @@ const register = async (req: Request) => {
     firstName,
     lastName,
     email,
-    password,
+    password
   });
 
   const verification = await VerificationCode.create({
     userId: newUser._id,
     type: VerificationEnum.EMAIL_VERIFICATION,
-    expiresAt: fortyFiveMinutesFromNow(),
+    expiresAt: fortyFiveMinutesFromNow()
   });
 
   const verificationLink = `${config.APP_ORIGIN}/confirm-account?code=${verification.code}`;
@@ -63,7 +63,7 @@ const register = async (req: Request) => {
   await emailQueue.add(emailQueueName, {
     to: email,
     subject: 'Please verify your email',
-    body: html,
+    body: html
   });
 
   return newUser;
@@ -73,7 +73,7 @@ const verifyEmail = async (code: string) => {
   const validCode = await VerificationCode.findOne({
     code: code,
     type: VerificationEnum.EMAIL_VERIFICATION,
-    expiresAt: { $gt: new Date() },
+    expiresAt: { $gt: new Date() }
   });
 
   if (!validCode) {
@@ -83,7 +83,7 @@ const verifyEmail = async (code: string) => {
   const updatedUser = await User.findByIdAndUpdate(
     validCode.userId,
     {
-      isEmailVerified: true,
+      isEmailVerified: true
     },
     { new: true }
   );
@@ -103,7 +103,7 @@ const login = async (req: Request) => {
 
   logger.info(`Login attempt for email: ${email}`);
   const user = await User.findOne({
-    email: email,
+    email: email
   });
 
   if (!user) {
@@ -130,25 +130,25 @@ const login = async (req: Request) => {
       user: null,
       mfaRequired: true,
       accessToken: '',
-      refreshToken: '',
+      refreshToken: ''
     };
   }
 
   logger.info(`Creating session for user ID: ${user._id}`);
   const session = await Session.create({
     userId: user._id,
-    userAgent,
+    userAgent
   });
 
   logger.info(`Signing tokens for user ID: ${user._id}`);
   const accessToken = signJwtToken({
     userId: user._id,
-    sessionId: session._id,
+    sessionId: session._id
   });
 
   const refreshToken = signJwtToken(
     {
-      sessionId: session._id,
+      sessionId: session._id
     },
     refreshTokenSignOptions
   );
@@ -158,7 +158,7 @@ const login = async (req: Request) => {
     user,
     accessToken,
     refreshToken,
-    mfaRequired: false,
+    mfaRequired: false
   };
 };
 
@@ -202,7 +202,7 @@ const refreshToken = async (refreshToken: string) => {
   const newRefreshToken = sessionRequireRefresh
     ? signJwtToken(
         {
-          sessionId: session._id,
+          sessionId: session._id
         },
         refreshTokenSignOptions
       )
@@ -210,12 +210,12 @@ const refreshToken = async (refreshToken: string) => {
 
   const accessToken = signJwtToken({
     userId: session.userId,
-    sessionId: session._id,
+    sessionId: session._id
   });
 
   return {
     accessToken,
-    refreshToken: newRefreshToken,
+    refreshToken: newRefreshToken
   };
 };
 
@@ -233,7 +233,7 @@ const forgotPassword = async (email: string) => {
   const count = await VerificationCode.countDocuments({
     userId: user._id,
     type: VerificationEnum.PASSWORD_RESET,
-    createdAt: { $gt: timeAgo },
+    createdAt: { $gt: timeAgo }
   });
 
   if (count >= maxAttempts) {
@@ -248,7 +248,7 @@ const forgotPassword = async (email: string) => {
   const validCode = await VerificationCode.create({
     userId: user._id,
     type: VerificationEnum.PASSWORD_RESET,
-    expiresAt,
+    expiresAt
   });
 
   const resetLink = `${config.APP_ORIGIN}/reset-password?code=${
@@ -260,7 +260,7 @@ const forgotPassword = async (email: string) => {
   await emailQueue.add(emailQueueName, {
     to: user.email,
     subject: 'Please reset your password',
-    body: html,
+    body: html
   });
 
   return null;
@@ -272,7 +272,7 @@ const resetPassword = async (req: Request) => {
   const validCode = await VerificationCode.findOne({
     code: verificationCode,
     type: VerificationEnum.PASSWORD_RESET,
-    expiresAt: { $gt: new Date() },
+    expiresAt: { $gt: new Date() }
   });
 
   if (!validCode) {
@@ -282,7 +282,7 @@ const resetPassword = async (req: Request) => {
   const hashedPassword = await hashValue(password);
 
   const updatedUser = await User.findByIdAndUpdate(validCode.userId, {
-    password: hashedPassword,
+    password: hashedPassword
   });
 
   if (!updatedUser) {
@@ -292,7 +292,7 @@ const resetPassword = async (req: Request) => {
   await validCode.deleteOne();
 
   await Session.deleteMany({
-    userId: updatedUser._id,
+    userId: updatedUser._id
   });
 
   return null;
@@ -305,5 +305,5 @@ export const authService = {
   logout,
   refreshToken,
   forgotPassword,
-  resetPassword,
+  resetPassword
 };

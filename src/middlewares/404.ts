@@ -7,8 +7,8 @@ const notFound = async (req: Request, res: Response) => {
     error: {
       path: req.originalUrl,
       method: req.method,
-      message: 'You reached a route that is not defined on this server',
-    },
+      message: 'You reached a route that is not defined on this server'
+    }
   });
 };
 
