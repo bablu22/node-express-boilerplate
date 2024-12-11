@@ -25,7 +25,21 @@ const getAllSessions = async (userId: string) => {
 };
 
 const getSessionById = async (sessionId: string) => {
-  const session = await Session.findById(sessionId).populate('userId').select('-expiresAt');
+  const session = await Session.findById(sessionId)
+    .populate([
+      {
+        path: 'userId',
+        populate: {
+          path: 'roleId',
+          select: 'name alias permissions',
+          populate: {
+            path: 'permissions',
+            select: 'resourceName resourceAlias isAllowed isDisabled'
+          }
+        }
+      }
+    ])
+    .select('-expiresAt');
 
   if (!session) {
     throw new NotFoundException('Session not found');

@@ -104,7 +104,16 @@ const login = async (req: Request) => {
   logger.info(`Login attempt for email: ${email}`);
   const user = await User.findOne({
     email: email
-  });
+  }).populate([
+    {
+      path: 'roleId',
+      select: 'name alias permissions',
+      populate: {
+        path: 'permissions',
+        select: 'resourceName resourceAlias isAllowed isDisabled'
+      }
+    }
+  ]);
 
   if (!user) {
     logger.warn(`Login failed: User with email ${email} not found`);
@@ -298,6 +307,32 @@ const resetPassword = async (req: Request) => {
   return null;
 };
 
+const checkAuth = async (req: Request) => {
+  const token = req.headers.authorization;
+  const { payload } = verifyJwtToken(token as string);
+
+  if (!payload) {
+    throw new UnauthorizedException('Invalid token');
+  }
+
+  const user = await User.findById(payload.userId).populate([
+    {
+      path: 'roleId',
+      select: 'name alias permissions',
+      populate: {
+        path: 'permissions',
+        select: 'resourceName resourceAlias isAllowed isDisabled'
+      }
+    }
+  ]);
+
+  if (!user) {
+    throw new UnauthorizedException('Invalid token');
+  }
+
+  return user;
+};
+
 export const authService = {
   register,
   verifyEmail,
@@ -305,5 +340,6 @@ export const authService = {
   logout,
   refreshToken,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  checkAuth
 };

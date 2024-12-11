@@ -5,6 +5,7 @@ import { Types } from 'mongoose';
 import { ILogger } from '@/common/utils/logger';
 import { PermissionModelName as permissionModel } from '@/modules/permission/permission.model';
 import { ResourceModelName as resourceModel } from '@/modules/resource/resource.model';
+import { RoleModelName as roleModel } from '@/modules/role/role.model';
 
 const permissionsData = fs.readFileSync(__dirname + '/permissions.jsonc', 'utf8');
 
@@ -18,7 +19,7 @@ const seed = async (logger: ILogger) => {
         permissionModel
       );
       if (!itemExists) {
-        const role = await searchOne({ name: item.roleName }, 'Role');
+        const role = await searchOne({ name: item.roleName }, roleModel);
         const resource = await searchOne({ name: item.resourceName }, resourceModel);
         try {
           const savedItem = await save(
@@ -29,12 +30,22 @@ const seed = async (logger: ILogger) => {
             },
             permissionModel
           );
+
+          // save permission id to role
+
+          await update({ _id: role._id }, { $push: { permissions: savedItem._id } }, roleModel);
+
           logger.info(`Saved permission id: ${savedItem._id}`);
         } catch (error) {
           logger.error(JSON.stringify(error));
         }
       } else {
         const updatedItem = await update({ _id: itemExists._id }, { ...item }, permissionModel);
+
+        // save permission id to role
+        const role = await searchOne({ name: item.roleName }, roleModel);
+        await update({ _id: role._id }, { $addToSet: { permissions: updatedItem._id } }, roleModel);
+
         logger.info(
           `Permission ${item.resourceName} for ${item.roleName} of id ${updatedItem._id} is updated`
         );
@@ -64,6 +75,7 @@ const migrate = async (logger: ILogger) => {
     },
     permissionModel
   );
+
   logger.info(`Migration of permissions finished`);
 };
 

@@ -6,6 +6,7 @@ import config from '@/config/app.config';
 import { clearAuthenticationCookies, REFRESH_PATH } from '@/common/utils/cookie';
 import { logger } from '@/common/utils/logger';
 import { MongoError } from '@/common/utils/error';
+import multer from 'multer';
 
 const formatZodError = (res: Response, error: z.ZodError) => {
   const errors = error.issues.map((err) => ({
@@ -25,6 +26,12 @@ const errorHandler: ErrorRequestHandler = (error, req, res, _next): any => {
 
   if (req.path === REFRESH_PATH) {
     clearAuthenticationCookies(res);
+  }
+
+  if (error instanceof multer.MulterError) {
+    return res.status(HTTPSTATUS.BAD_REQUEST).json({
+      message: error.message
+    });
   }
 
   // Handling specific error types

@@ -7,6 +7,8 @@ const validate =
     try {
       schema.parse({
         body: req.body,
+        files: req.files,
+        file: req.file,
         query: req.query,
         params: req.params,
         cookies: req.cookies

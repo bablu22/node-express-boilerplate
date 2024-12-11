@@ -2,56 +2,242 @@
   {
     "name": "/api/v1/permission/:id",
     "alias": "Get Permission By ID",
-    "type": "api"
+    "type": "api",
+    "method": "GET"
   },
   {
     "name": "/api/v1/permission/all",
     "alias": "Get All Permissions",
-    "type": "api"
+    "type": "api",
+    "method": "GET"
   },
   {
     "name": "/api/v1/permission/delete/:id",
     "alias": "Delete Permission",
-    "type": "api"
+    "type": "api",
+    "method": "DELETE"
   },
   {
     "name": "/api/v1/resource/:id",
     "alias": "Get Resource By ID",
-    "type": "api"
+    "type": "api",
+    "method": "GET"
   },
   {
     "name": "/api/v1/resource/all",
     "alias": "Get All Resources",
-    "type": "api"
+    "type": "api",
+    "method": "GET"
   },
   {
     "name": "/api/v1/resource/delete/:id",
     "alias": "Delete Resource",
-    "type": "api"
+    "type": "api",
+    "method": "DELETE"
   },
   {
     "name": "/api/v1/role/:id",
     "alias": "Get Role By ID",
-    "type": "api"
+    "type": "api",
+    "method": "GET"
   },
   {
     "name": "/api/v1/role/all",
     "alias": "Get All Roles",
-    "type": "api"
+    "type": "api",
+    "method": "GET"
   },
   {
     "name": "/api/v1/role/create",
     "alias": "Create Role",
-    "type": "api"
+    "type": "api",
+    "method": "POST"
   },
   {
     "name": "/api/v1/role/delete/:id",
     "alias": "Delete Role",
-    "type": "api"
+    "type": "api",
+    "method": "DELETE"
   },
   {
     "name": "/api/v1/role/update/:id",
     "alias": "Update Role",
-    "type": "api"
+    "type": "api",
+    "method": "PATCH"
+  },
+  {
+    "name": "/dashboard/auth",
+    "alias": "Auth Dashboard",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/auth/create",
+    "alias": "Create New Auth",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/auth/edit",
+    "alias": "Edit Auth",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/auth/list",
+    "alias": "Auth List View",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/auth/view",
+    "alias": "View Auth Details",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/mfa",
+    "alias": "Mfa Dashboard",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/mfa/create",
+    "alias": "Create New Mfa",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/mfa/edit",
+    "alias": "Edit Mfa",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/mfa/list",
+    "alias": "Mfa List View",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/mfa/view",
+    "alias": "View Mfa Details",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/permission",
+    "alias": "Permission Dashboard",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/permission/create",
+    "alias": "Create New Permission",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/permission/edit",
+    "alias": "Edit Permission",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/permission/list",
+    "alias": "Permission List View",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/permission/view",
+    "alias": "View Permission Details",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/resource",
+    "alias": "Resource Dashboard",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/resource/create",
+    "alias": "Create New Resource",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/resource/edit",
+    "alias": "Edit Resource",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/resource/list",
+    "alias": "Resource List View",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/resource/view",
+    "alias": "View Resource Details",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/role",
+    "alias": "Role Dashboard",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/role/create",
+    "alias": "Create New Role",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/role/edit",
+    "alias": "Edit Role",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/role/list",
+    "alias": "Role List View",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/role/view",
+    "alias": "View Role Details",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/session",
+    "alias": "Session Dashboard",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/session/create",
+    "alias": "Create New Session",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/session/edit",
+    "alias": "Edit Session",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/session/list",
+    "alias": "Session List View",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/session/view",
+    "alias": "View Session Details",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/user",
+    "alias": "User Dashboard",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/user/create",
+    "alias": "Create New User",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/user/edit",
+    "alias": "Edit User",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/user/list",
+    "alias": "User List View",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/user/view",
+    "alias": "View User Details",
+    "type": "client"
   }
 ]

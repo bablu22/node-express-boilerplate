@@ -3,6 +3,7 @@ import { getEnv } from '@/common/utils/get-env';
 const appConfig = () => ({
   NODE_ENV: getEnv('NODE_ENV', 'development'),
   APP_ORIGIN: getEnv('APP_ORIGIN', 'localhost'),
+  APP_URL: getEnv('APP_URL', 'http://localhost:5000'),
   PORT: getEnv('PORT', '5000'),
   BASE_PATH: getEnv('BASE_PATH', '/api/v1'),
   MONGO_URI: getEnv('MONGO_URI'),
@@ -23,6 +24,13 @@ const appConfig = () => ({
     SMTPPORT: getEnv('SMTPPORT'),
     SMTPUSER: getEnv('SMTPUSER'),
     SMTPPASS: getEnv('SMTPPASS')
+  },
+
+  storage: {
+    STORAGE_TYPE: getEnv('STORAGE_TYPE', 'local'),
+    CLOUDINARY_CLOUD_NAME: getEnv('CLOUDINARY_CLOUD_NAME'),
+    CLOUDINARY_API_KEY: getEnv('CLOUDINARY_API_KEY'),
+    CLOUDINARY_API_SECRET: getEnv('CLOUDINARY_API_SECRET')
   }
 });
 

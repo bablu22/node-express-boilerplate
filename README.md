@@ -1,211 +1,241 @@
-# Node.js Express TypeScript Boilerplate
+# 🚀 **Node.js Express TypeScript Boilerplate**
 
-## Project Overview
+## 📝 **Project Overview**
 
-This is a robust Node.js Express.js boilerplate project configured with TypeScript, ESLint, Prettier, and Husky for consistent code quality and development experience.
+This boilerplate is a robust, production-ready Node.js and Express.js project template designed to supercharge your backend development. Equipped with TypeScript, advanced authentication mechanisms, Role-Based Access Control (RBAC), flexible querying capabilities, and seamless integrations with MongoDB and Redis, it ensures a smooth and efficient development experience.
 
-## Prerequisites
+---
+
+## ✨ **Key Features**
+
+### 🔐 **Advanced Authentication**
+
+- Multi-factor authentication (MFA) support
+- JWT-based authentication for secure sessions
+- Comprehensive Role-Based Access Control (RBAC)
+
+### 🛠 **Powerful Development Tools**
+
+- **TypeScript**: Ensure type safety and reduce runtime errors
+- **ESLint**: Maintain code quality
+- **Prettier**: Enforce consistent code formatting
+- **Husky**: Leverage Git hooks for streamlined workflows
+
+### 📦 **Modular Architecture**
+
+- Automatic module scaffolding
+- Effortless route integration
+- Simplified resource and permission management
+
+### 💾 **Flexible Storage Options**
+
+- Local file system storage
+- Cloudinary integration for cloud-based storage
+
+### 🔍 **Dynamic Querying**
+
+- QueryBuilder for flexible and advanced data retrieval
+- Comprehensive filtering, searching, sorting, and population options
+
+---
+
+## 🛠 **Prerequisites**
 
 - Node.js (v18+ recommended)
 - npm or yarn
+- MongoDB
+- Redis
 
-## Setup Instructions
+---
 
-1. Clone the repository
+## 🚦 **Quick Start**
+
+### 1. Clone the Repository
 
 ```bash
-git clone https://your-repo-url.git
-cd your-project-name
+git clone https://github.com/bablu22/node-express-boilerplate.git
+cd node-express-boilerplate
 ```
 
-2. Install dependencies
+### 2. Install Dependencies
 
 ```bash
 npm install
 ```
 
-3. Create .env file
+### 3. Configure Environment
 
 ```bash
+# Copy the environment template
 cp .env.example .env
+
+# Update .env with your configuration
+vim .env
 ```
 
-4. Available Scripts
+---
 
-- `npm run dev`: Start development server
-- `npm run build`: Compile TypeScript to JavaScript
-- `npm start`: Run compiled production server
-- `npm run lint`: Run ESLint
-- `npm run format`: Run Prettier
-- `npm test`: Run tests
+## 📋 **Available Scripts**
 
-## QueryBuilder Use Cases
+| Script                    | Description                                  |
+| ------------------------- | -------------------------------------------- |
+| `npm run dev`             | Start the development server with hot reload |
+| `npm run build`           | Compile TypeScript into JavaScript           |
+| `npm start`               | Launch the production server                 |
+| `npm run lint`            | Perform code quality checks with ESLint      |
+| `npm run format`          | Apply Prettier formatting rules              |
+| `npm run generate:module` | Create a new module scaffold                 |
+| `npm run db:seed`         | Seed the database with initial data          |
 
-### 1. Product Controller with Advanced Querying
+---
+
+## 🔧 **Module Generation**
+
+Easily generate a new module with a predefined scaffold:
+
+```bash
+npm run generate:module
+```
+
+This command generates the following structure in `src/modules/<moduleName>/`:
+
+- `<moduleName>.interface.ts`
+- `<moduleName>.service.ts`
+- `<moduleName>.model.ts`
+- `<moduleName>.routes.ts`
+- `<moduleName>.controller.ts`
+- `<moduleName>.validation.ts`
+
+🔔 **Note**: Generated modules are automatically integrated into the application's route system.
+
+---
+
+## 🔐 **Authentication & Authorization**
+
+### Standard Authentication
 
 ```typescript
-import { Request, Response } from 'express';
-import QueryBuilder from '../utils/QueryBuilder';
-import Product from '../models/Product';
-
-class ProductController {
-  // Flexible Product Search with Multiple Filters
-  async getAllProducts(req: Request, res: Response) {
-    try {
-      const queryBuilder = new QueryBuilder<IProduct>(Product, {
-        // Query parameters from request
-        ...req.query,
-        // Configure population
-        populate: [
-          {
-            path: 'category',
-            select: 'name description',
-          },
-          {
-            path: 'manufacturer',
-            select: 'name country',
-          },
-        ],
-      });
-
-      const result = await queryBuilder
-        .search(['name', 'description'])
-        .advancedFilter({
-          // Example of advanced filtering
-          price: { $gte: 10, $lte: 500 },
-          inStock: true,
-        })
-        .execute();
-
-      res.json(result);
-    } catch (error) {
-      res.status(500).json({ message: 'Error fetching products', error });
-    }
-  }
-
-  // Example of specific product retrieval with advanced options
-  async getProductsWithSpecificCriteria(req: Request, res: Response) {
-    try {
-      const queryBuilder = new QueryBuilder<IProduct>(Product, {
-        // Specific field selection
-        fields: 'name,price,category,ratings',
-        // Custom sorting
-        sort: '-price,ratings',
-        // Pagination
-        page: req.query.page ? Number(req.query.page) : 1,
-        limit: req.query.limit ? Number(req.query.limit) : 10,
-        // Additional filters
-        category: req.query.category,
-        populate: {
-          path: 'category',
-          select: 'name',
-        },
-      });
-
-      const result = await queryBuilder.search(['name', 'description']).execute();
-
-      res.json(result);
-    } catch (error) {
-      res.status(500).json({ message: 'Error fetching products', error });
-    }
-  }
-}
+// Use authenticateJWT for basic JWT authentication
+router.get('/route', authenticateJWT, Controller.method);
 ```
 
-### 2. Example Route Implementation
+### Role-Based Access Control (RBAC)
 
 ```typescript
-import express from 'express';
-import ProductController from '../controllers/ProductController';
-
-const router = express.Router();
-const productController = new ProductController();
-
-// GET all products with flexible querying
-router.get('/products', productController.getAllProducts);
-
-// GET products with specific criteria
-router.get('/products/filtered', productController.getProductsWithSpecificCriteria);
+// Use authorizeRequest for role-based access
+router.post(
+  '/create',
+  authenticateJWT,
+  authorizeRequest(['Admin', 'Editor']),
+  Controller.createMethod
+);
 ```
 
-### 3. Query Builder Usage Examples
+---
 
-#### Basic Search
+## 🔍 **QueryBuilder Usage**
+
+### Basic Search
 
 ```typescript
 const products = await new QueryBuilder(Product, {
   searchTerm: 'smartphone',
   page: 1,
-  limit: 10,
+  limit: 10
 })
   .search(['name', 'description'])
   .execute();
 ```
 
-#### Advanced Filtering
+### Advanced Filtering
 
 ```typescript
 const filteredProducts = await new QueryBuilder(Product, {
   sort: '-price',
   page: 1,
-  limit: 20,
+  limit: 20
 })
   .advancedFilter({
     price: { $gte: 100, $lte: 1000 },
     brand: { $in: ['Apple', 'Samsung'] },
-    inStock: true,
+    inStock: true
   })
   .execute();
 ```
 
-#### Complex Population
+---
 
-```typescript
-const productsWithDetails = await new QueryBuilder(Product, {
-  populate: [
-    {
-      path: 'category',
-      select: 'name description',
-      populate: {
-        path: 'parentCategory',
-        select: 'name',
-      },
-    },
-    {
-      path: 'reviews',
-      select: 'rating comment',
-      match: { rating: { $gte: 4 } },
-    },
-  ],
-}).execute();
+## 💾 **Storage Configuration**
+
+Set up your preferred storage solution in the `.env` file:
+
+```env
+# Local File System
+STORAGE_TYPE=local
+
+# Cloudinary Integration
+STORAGE_TYPE=cloudinary
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
 ```
 
-## Development Workflow
+---
 
-- Write code in `src/` directory
-- Husky will run lint and format checks on pre-commit
-- TypeScript provides type safety
-- ESLint ensures code quality
-- Prettier maintains consistent code formatting
+## 🚀 **Deployment**
 
-## Deployment
-
-1. Build the project
+### 1. Build the Project
 
 ```bash
 npm run build
 ```
 
-2. Start the production server
+### 2. Launch the Production Server
 
 ```bash
 npm start
 ```
 
-## Contributing
+---
 
-Please read CONTRIBUTING.md for details on our code of conduct and the process for submitting pull requests.
+## 🤝 **Contributing**
 
-## License
+1. Fork the repository.
+2. Create a new feature branch:
 
-This project is licensed under the MIT License - see the LICENSE.md file for details.
+   ```bash
+   git checkout -b feature/AmazingFeature
+   ```
+
+3. Commit your changes:
+
+   ```bash
+   git commit -m 'Add some AmazingFeature'
+   ```
+
+4. Push the branch:
+
+   ```bash
+   git push origin feature/AmazingFeature
+   ```
+
+5. Submit a Pull Request.
+
+---
+
+## 📄 **License**
+
+This project is licensed under the MIT License. See `LICENSE.md` for details.
+
+---
+
+## 🙌 **Acknowledgements**
+
+- [Express.js](https://expressjs.com/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Mongoose](https://mongoosejs.com/)
+- [Passport.js](http://www.passportjs.org/)
+
+---
+
+**Happy Coding! 💻🚀**

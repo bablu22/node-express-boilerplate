@@ -86,5 +86,285 @@
     "roleAlias": "Superadmin",
     "isAllowed": true,
     "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/auth",
+    "resourceAlias": "Auth Dashboard",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/auth/create",
+    "resourceAlias": "Create New Auth",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/auth/edit",
+    "resourceAlias": "Edit Auth",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/auth/list",
+    "resourceAlias": "Auth List View",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/auth/view",
+    "resourceAlias": "View Auth Details",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/mfa",
+    "resourceAlias": "Mfa Dashboard",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/mfa/create",
+    "resourceAlias": "Create New Mfa",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/mfa/edit",
+    "resourceAlias": "Edit Mfa",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/mfa/list",
+    "resourceAlias": "Mfa List View",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/mfa/view",
+    "resourceAlias": "View Mfa Details",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/permission",
+    "resourceAlias": "Permission Dashboard",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/permission/create",
+    "resourceAlias": "Create New Permission",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/permission/edit",
+    "resourceAlias": "Edit Permission",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/permission/list",
+    "resourceAlias": "Permission List View",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/permission/view",
+    "resourceAlias": "View Permission Details",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/resource",
+    "resourceAlias": "Resource Dashboard",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/resource/create",
+    "resourceAlias": "Create New Resource",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/resource/edit",
+    "resourceAlias": "Edit Resource",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/resource/list",
+    "resourceAlias": "Resource List View",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/resource/view",
+    "resourceAlias": "View Resource Details",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/role",
+    "resourceAlias": "Role Dashboard",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/role/create",
+    "resourceAlias": "Create New Role",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/role/edit",
+    "resourceAlias": "Edit Role",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/role/list",
+    "resourceAlias": "Role List View",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/role/view",
+    "resourceAlias": "View Role Details",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/session",
+    "resourceAlias": "Session Dashboard",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/session/create",
+    "resourceAlias": "Create New Session",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/session/edit",
+    "resourceAlias": "Edit Session",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/session/list",
+    "resourceAlias": "Session List View",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/session/view",
+    "resourceAlias": "View Session Details",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/user",
+    "resourceAlias": "User Dashboard",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/user/create",
+    "resourceAlias": "Create New User",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/user/edit",
+    "resourceAlias": "Edit User",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/user/list",
+    "resourceAlias": "User List View",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/user/view",
+    "resourceAlias": "View User Details",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
   }
 ]

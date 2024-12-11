@@ -5,7 +5,7 @@ import prettier from 'eslint-config-prettier';
 export default tseslint.config(
   {
     // Globally ignored files
-    ignores: ['**/node_modules/', '**/dist/', '**/.git/', '**/.husky/'],
+    ignores: ['**/node_modules/', '**/dist/', '**/.git/', '**/.husky/']
   },
   // Recommended base configs
   eslint.configs.recommended,
@@ -21,8 +21,8 @@ export default tseslint.config(
         'warn',
         {
           argsIgnorePattern: '^_',
-          varsIgnorePattern: '^_',
-        },
+          varsIgnorePattern: '^_'
+        }
       ],
       'no-console': 'off',
 
@@ -35,17 +35,17 @@ export default tseslint.config(
         'error',
         {
           selector: 'variable',
-          format: ['camelCase', 'UPPER_CASE', 'PascalCase'],
+          format: ['camelCase', 'UPPER_CASE', 'PascalCase', 'snake_case']
         },
         {
           selector: 'function',
-          format: ['camelCase'],
+          format: ['camelCase']
         },
         {
           selector: 'class',
-          format: ['PascalCase'],
-        },
-      ],
+          format: ['PascalCase']
+        }
+      ]
     },
     languageOptions: {
       globals: {
@@ -54,10 +54,10 @@ export default tseslint.config(
         process: 'readonly', // Add process as a global
         console: 'readonly', // Add console as a global
         es2021: true,
-        env: true,
+        env: true
       },
       sourceType: 'commonjs',
-      ecmaVersion: 'latest',
-    },
+      ecmaVersion: 'latest'
+    }
   }
 );

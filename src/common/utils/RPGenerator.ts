@@ -6,7 +6,8 @@ import chalk from 'chalk';
 interface Resource {
   name: string;
   alias: string;
-  type: string;
+  type: 'api' | 'client'; // Updated to include 'client' type
+  method?: string; // Add HTTP method to distinguish different route types
 }
 
 // Interface for Permission
@@ -19,37 +20,43 @@ interface Permission {
   isDisabled: boolean;
 }
 
-// Function to convert route path to a readable alias
-function convertPathToAlias(routePath: string, moduleName: string): string {
-  // Remove parameters like :id and initial /
+function convertPathToAlias(routePath: string, moduleName: string, method: string = 'GET'): string {
   const cleanPath = routePath.replace(/^\//, '').replace(/\/:[^/]+/g, '');
 
   // Capitalize module name (singular form)
   const moduleNameSingular = moduleName.replace(/s$/, '');
+  const capitalizedModule =
+    moduleNameSingular.charAt(0).toUpperCase() + moduleNameSingular.slice(1);
 
-  // Determine action based on route path
+  // Determine action based on route path and method
   switch (true) {
-    case cleanPath === 'all':
-      return `Get All ${moduleNameSingular.charAt(0).toUpperCase() + moduleNameSingular.slice(1)}s`;
-    case cleanPath === 'create':
-      return `Create ${moduleNameSingular.charAt(0).toUpperCase() + moduleNameSingular.slice(1)}`;
-    case cleanPath.includes('update'):
-      return `Update ${moduleNameSingular.charAt(0).toUpperCase() + moduleNameSingular.slice(1)}`;
-    case cleanPath.includes('delete'):
-      return `Delete ${moduleNameSingular.charAt(0).toUpperCase() + moduleNameSingular.slice(1)}`;
+    case cleanPath === 'all' && method === 'get':
+      return `Get All ${capitalizedModule}s`;
+    case cleanPath === 'create' && method === 'post':
+      return `Create ${capitalizedModule}`;
+    case cleanPath.includes('update') && method === 'patch':
+      return `Update ${capitalizedModule}`;
+    case cleanPath.includes('update') && method === 'put':
+      return `Update ${capitalizedModule}`;
+    case cleanPath.includes('delete') && method === 'delete':
+      return `Delete ${capitalizedModule}`;
+    case cleanPath === '' || cleanPath === ':id':
+      return method === 'get'
+        ? `Get ${capitalizedModule} By ID`
+        : `${method.toUpperCase()} ${capitalizedModule}`;
     default:
-      return `Get ${moduleNameSingular.charAt(0).toUpperCase() + moduleNameSingular.slice(1)} By ID`;
+      return `${method.toUpperCase()} ${capitalizedModule} - ${cleanPath}`;
   }
 }
 
-// Function to extract resources from a route file
 function extractResourcesFromRouteFile(filePath: string): Resource[] {
   const resources: Resource[] = [];
+  const uniqueResourcePaths = new Set<string>();
 
   try {
     const fileContent = fs.readFileSync(filePath, 'utf-8');
 
-    // Regex to match router method calls
+    // More comprehensive regex to match router method calls
     const routeRegex = /router\.(get|post|put|patch|delete)\(['"]([^'"]+)['"].*\)/g;
 
     // Extract module name
@@ -57,16 +64,25 @@ function extractResourcesFromRouteFile(filePath: string): Resource[] {
 
     let match;
     while ((match = routeRegex.exec(fileContent)) !== null) {
-      const [, , routePath] = match;
+      const [, method, routePath] = match;
 
       // Construct full route path
       const fullRoutePath = `/api/v1/${moduleName}${routePath}`;
 
-      resources.push({
-        name: fullRoutePath,
-        alias: convertPathToAlias(routePath, moduleName),
-        type: 'api'
-      });
+      // Create a unique key to prevent duplicates
+      const uniqueKey = `${method}:${fullRoutePath}`;
+
+      if (!uniqueResourcePaths.has(uniqueKey)) {
+        const resource: Resource = {
+          name: fullRoutePath,
+          alias: convertPathToAlias(routePath, moduleName, method),
+          type: 'api',
+          method: method.toUpperCase()
+        };
+
+        resources.push(resource);
+        uniqueResourcePaths.add(uniqueKey);
+      }
     }
 
     return resources;
@@ -76,7 +92,39 @@ function extractResourcesFromRouteFile(filePath: string): Resource[] {
   }
 }
 
-// Function to generate resources from all route files
+function generateClientResources(moduleName: string): Resource[] {
+  // Define common client-side resources for a typical CRUD module
+  const clientResources: Resource[] = [
+    {
+      name: `/dashboard/${moduleName}`,
+      alias: `${moduleName.charAt(0).toUpperCase() + moduleName.slice(1)} Dashboard`,
+      type: 'client'
+    },
+    {
+      name: `/dashboard/${moduleName}/list`,
+      alias: `${moduleName.charAt(0).toUpperCase() + moduleName.slice(1)} List View`,
+      type: 'client'
+    },
+    {
+      name: `/dashboard/${moduleName}/create`,
+      alias: `Create New ${moduleName.charAt(0).toUpperCase() + moduleName.slice(1)}`,
+      type: 'client'
+    },
+    {
+      name: `/dashboard/${moduleName}/edit`,
+      alias: `Edit ${moduleName.charAt(0).toUpperCase() + moduleName.slice(1)}`,
+      type: 'client'
+    },
+    {
+      name: `/dashboard/${moduleName}/view`,
+      alias: `View ${moduleName.charAt(0).toUpperCase() + moduleName.slice(1)} Details`,
+      type: 'client'
+    }
+  ];
+
+  return clientResources;
+}
+
 function generateResources(modulesPath: string): Resource[] {
   const allResources: Resource[] = [];
   const uniqueResourcePaths = new Set<string>();
@@ -95,6 +143,7 @@ function generateResources(modulesPath: string): Resource[] {
           if (stat.isDirectory()) {
             findRouteFiles(filePath);
           } else if (file.endsWith('.routes.ts')) {
+            // Extract API resources
             const fileResources = extractResourcesFromRouteFile(filePath);
             const filteredResources = fileResources.filter(
               (resource) =>
@@ -106,9 +155,23 @@ function generateResources(modulesPath: string): Resource[] {
             );
 
             filteredResources.forEach((resource) => {
-              if (!uniqueResourcePaths.has(resource.name)) {
-                uniqueResourcePaths.add(resource.name);
+              // Create a unique key to prevent duplicates
+              const uniqueKey = `${resource.method}:${resource.name}`;
+
+              if (!uniqueResourcePaths.has(uniqueKey)) {
+                uniqueResourcePaths.add(uniqueKey);
                 allResources.push(resource);
+              }
+            });
+
+            // Generate client-side resources
+            const moduleName = path.basename(filePath, '.routes.ts').replace('.', '');
+            const clientResources = generateClientResources(moduleName);
+
+            clientResources.forEach((clientResource) => {
+              if (!uniqueResourcePaths.has(clientResource.name)) {
+                uniqueResourcePaths.add(clientResource.name);
+                allResources.push(clientResource);
               }
             });
           }
@@ -119,15 +182,15 @@ function generateResources(modulesPath: string): Resource[] {
     } catch (dirError) {
       console.error(chalk.red(`Error reading directory ${dir}:`), dirError);
     }
+
+    return allResources;
   }
 
-  findRouteFiles(modulesPath);
-  return allResources;
+  return findRouteFiles(modulesPath);
 }
 
-// Function to generate permissions from resources
 function generatePermissions(resources: Resource[]): Permission[] {
-  // Generate permissions for non-filtered resources
+  // Generate permissions for both API and client resources
   return resources.map((resource) => ({
     resourceName: resource.name,
     resourceAlias: resource.alias,
@@ -138,7 +201,6 @@ function generatePermissions(resources: Resource[]): Permission[] {
   }));
 }
 
-// Function to save resources and generate permissions
 function generateResourcesAndPermissions(
   modulesPath: string,
   resourceOutputPath: string,
@@ -182,7 +244,8 @@ export {
   generateResourcesAndPermissions,
   generateResources,
   generatePermissions,
-  convertPathToAlias
+  convertPathToAlias,
+  generateClientResources
 };
 
 // If running as a script

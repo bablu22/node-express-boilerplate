@@ -23,5 +23,6 @@ router.post(
 );
 
 router.get('/refresh', authController.refreshToken);
+router.get('/check', authController.checkAuth);
 
 export default router;

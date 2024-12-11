@@ -122,6 +122,17 @@ const resetPassword: RequestHandler = asyncHandler(async (req, res) => {
   });
 });
 
+const checkAuth = asyncHandler(async (req, res) => {
+  const user = await authService.checkAuth(req);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: HTTPSTATUS.OK,
+    message: 'User authenticated successfully',
+    data: user
+  });
+});
+
 export const authController = {
   register,
   verifyEmail,
@@ -129,5 +140,6 @@ export const authController = {
   logout,
   refreshToken,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  checkAuth
 };

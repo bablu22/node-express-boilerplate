@@ -16,6 +16,7 @@ import errorHandler from '@middlewares/errorHandler';
 import { handleError, handleRequest } from '@middlewares/auth';
 import compression from 'compression';
 import rateLimit from 'express-rate-limit';
+import helmet from 'helmet';
 
 const app = express();
 const BASE_PATH = config.BASE_PATH;
@@ -25,6 +26,10 @@ const limiter = rateLimit({
   max: 1000 // Limit each IP to 1000 requests per window
 });
 
+// make uploads folder public to access images
+const rootDir = process.cwd();
+app.use(`/uploads`, express.static(`${rootDir}/uploads`));
+
 // General middleware initialization
 app.use(compression());
 app.use(express.json());
@@ -33,12 +38,13 @@ app.use(cookieParser());
 app.use(passport.initialize());
 app.use(
   cors({
-    origin: config.APP_ORIGIN,
+    origin: 'http://localhost:5173',
     credentials: true
   })
 );
 
 app.use(limiter);
+app.use(helmet());
 app.use(handleRequest);
 
 // Routes Setup
