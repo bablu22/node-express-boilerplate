@@ -251,9 +251,9 @@ export {
 // If running as a script
 if (require.main === module) {
   try {
-    const modulesPath = path.resolve(__dirname, '../../modules');
-    const resourceOutputPath = path.join(__dirname, '../../database/seed/resources.jsonc');
-    const permissionOutputPath = path.join(__dirname, '../../database/seed/permissions.jsonc');
+    const modulesPath = path.resolve(__dirname, '../modules');
+    const resourceOutputPath = path.join(__dirname, '../database/seed/resources.jsonc');
+    const permissionOutputPath = path.join(__dirname, '../database/seed/permissions.jsonc');
 
     console.log(chalk.cyan('Starting Resources and Permissions Generation...'));
     console.log(chalk.gray(`Modules Path: ${modulesPath}`));

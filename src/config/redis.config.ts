@@ -25,7 +25,7 @@ export async function validateRedisConnection() {
     const testValue = await redis.get('test-connection');
 
     if (testValue === 'working') {
-      console.log(chalk.black.bgBlueBright('Redis connection is working ✅ '));
+      console.log(chalk.black.bgBlueBright('😊 Redis connection is working ✅ '));
     }
 
     // Optional: Clean up test key

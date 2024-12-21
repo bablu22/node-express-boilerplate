@@ -1,4 +1,5 @@
 import config from '@/config/app.config';
+import chalk from 'chalk';
 import { Router } from 'express';
 import fs from 'fs';
 import path from 'path';
@@ -15,7 +16,7 @@ const loadRoutes = async (): Promise<ModuleRoute[]> => {
   const moduleRoutes: ModuleRoute[] = [];
   const moduleNames = fs.readdirSync(modulesPath);
 
-  console.info(`📂 Starting to load routes from modules in directory: ${modulesPath}`);
+  // console.info(`📂 Starting to load routes from modules in directory: ${modulesPath}`);
 
   for (const moduleName of moduleNames) {
     const routesFilePath = path.join(modulesPath, moduleName, `${moduleName}.routes.js`);
@@ -30,9 +31,11 @@ const loadRoutes = async (): Promise<ModuleRoute[]> => {
           routes
         });
 
-        console.info(
-          `✅ Successfully loaded routes for module: "${moduleName}" at path: /${moduleName}`
-        );
+        // if (config.NODE_ENV === 'development') {
+        //   console.info(
+        //     `✅ Successfully loaded routes for module: "${moduleName}" at path: /${moduleName}`
+        //   );
+        // }
       } catch (error: any) {
         console.error(`❌ Error loading routes for module "${moduleName}"`, {
           moduleName,
@@ -46,7 +49,9 @@ const loadRoutes = async (): Promise<ModuleRoute[]> => {
     }
   }
 
-  console.info(`📂 Finished loading routes. Total modules loaded: ${moduleRoutes.length}`);
+  console.log(chalk.black.bgWhite(`📂 All routes loaded successfully!`));
+  console.log(' ');
+
   return moduleRoutes;
 };
 

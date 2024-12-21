@@ -64,7 +64,7 @@ app.use((req, res, next) => {
 app.listen(config.PORT, async () => {
   console.log(' ');
   console.log(
-    chalk.black.bgWhite(` Server listening on port ${config.PORT} in ${config.NODE_ENV} mode ✅ `)
+    chalk.black.bgWhite(`🛜 Server listening on port ${config.PORT} in ${config.NODE_ENV} mode ✅ `)
   );
   console.log(' ');
   await connectDatabase();

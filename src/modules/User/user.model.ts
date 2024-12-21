@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import { generateUniqueCode } from '@/common/utils/uuid';
 import { IUser, IVerificationCode, UserPreferences } from './user.interface';
 import { MongoError } from '@/common/utils/error';
+import mongooseToSwagger from 'mongoose-to-swagger';
 
 const userPreferencesSchema = new Schema<UserPreferences>({
   enable2FA: { type: Boolean, default: false },
@@ -163,3 +164,5 @@ export const VerificationCode = mongoose.model<IVerificationCode>(
 );
 
 export default User;
+
+export const userSwaggerSchema = mongooseToSwagger(User);

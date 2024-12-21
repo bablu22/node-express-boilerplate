@@ -152,14 +152,6 @@
     "isDisabled": false
   },
   {
-    "resourceName": "/dashboard",
-    "resourceAlias": "Dashboard",
-    "roleName": "superadmin",
-    "roleAlias": "Superadmin",
-    "isAllowed": true,
-    "isDisabled": false
-  },
-  {
     "resourceName": "/auth/view",
     "resourceAlias": "View Auth Details",
     "roleName": "superadmin",

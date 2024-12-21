@@ -119,11 +119,6 @@
     "type": "client"
   },
   {
-    "name": "/dashboard",
-    "alias": "Dashboard",
-    "type": "client"
-  },
-  {
     "name": "/dashboard/auth",
     "alias": "Auth Dashboard",
     "type": "client"
