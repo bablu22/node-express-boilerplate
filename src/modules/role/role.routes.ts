@@ -3,11 +3,10 @@ import { RoleController } from './role.controller';
 import validate from '@/middlewares/validate';
 import { createRoleSchema, updateRoleSchema } from './role.validation';
 import { authenticateJWT } from '@/common/passport/strategy';
-import { authorizeRequest } from '@/middlewares/auth';
 
 const router = Router();
 
-router.get('/all', authenticateJWT, authorizeRequest(), RoleController.getAllRole);
+router.get('/all', authenticateJWT, RoleController.getAllRole);
 
 router.get('/:id', RoleController.getRoleById);
 

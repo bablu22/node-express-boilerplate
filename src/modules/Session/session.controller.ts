@@ -26,7 +26,6 @@ const getAllSession: RequestHandler = asyncHandler(async (req, res) => {
 
 const getSession: RequestHandler = asyncHandler(async (req, res) => {
   const sessionId = req.sessionId;
-
   const user = await sessionService.getSessionById(sessionId as string);
 
   sendResponse(res, {

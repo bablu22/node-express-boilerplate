@@ -104,16 +104,7 @@ const login = async (req: Request) => {
   logger.info(`Login attempt for email: ${email}`);
   const user = await User.findOne({
     email: email
-  }).populate([
-    {
-      path: 'roleId',
-      select: 'name alias permissions',
-      populate: {
-        path: 'permissions',
-        select: 'resourceName resourceAlias isAllowed isDisabled'
-      }
-    }
-  ]);
+  });
 
   if (!user) {
     logger.warn(`Login failed: User with email ${email} not found`);

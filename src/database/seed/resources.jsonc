@@ -1,5 +1,53 @@
 [
   {
+    "name": "/api/v1/gallery/all",
+    "alias": "Get All Gallerys",
+    "type": "api",
+    "method": "GET"
+  },
+  {
+    "name": "/api/v1/gallery/folder",
+    "alias": "POST Gallery - folder",
+    "type": "api",
+    "method": "POST"
+  },
+  {
+    "name": "/api/v1/gallery/folder/:folder/images",
+    "alias": "GET Gallery - folder/images",
+    "type": "api",
+    "method": "GET"
+  },
+  {
+    "name": "/api/v1/gallery/folder/:id",
+    "alias": "DELETE Gallery - folder",
+    "type": "api",
+    "method": "DELETE"
+  },
+  {
+    "name": "/api/v1/gallery/folders",
+    "alias": "GET Gallery - folders",
+    "type": "api",
+    "method": "GET"
+  },
+  {
+    "name": "/api/v1/gallery/image/:id",
+    "alias": "DELETE Gallery - image",
+    "type": "api",
+    "method": "DELETE"
+  },
+  {
+    "name": "/api/v1/gallery/images",
+    "alias": "DELETE Gallery - images",
+    "type": "api",
+    "method": "DELETE"
+  },
+  {
+    "name": "/api/v1/gallery/upload/attachment",
+    "alias": "POST Gallery - upload/attachment",
+    "type": "api",
+    "method": "POST"
+  },
+  {
     "name": "/api/v1/permission/:id",
     "alias": "Get Permission By ID",
     "type": "api",
@@ -66,6 +114,16 @@
     "method": "PATCH"
   },
   {
+    "name": "/auth/view",
+    "alias": "View Auth Details",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard",
+    "alias": "Dashboard",
+    "type": "client"
+  },
+  {
     "name": "/dashboard/auth",
     "alias": "Auth Dashboard",
     "type": "client"
@@ -86,8 +144,23 @@
     "type": "client"
   },
   {
-    "name": "/dashboard/auth/view",
-    "alias": "View Auth Details",
+    "name": "/dashboard/gallery",
+    "alias": "Gallery Dashboard",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/gallery/create",
+    "alias": "Create New Gallery",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/gallery/edit",
+    "alias": "Edit Gallery",
+    "type": "client"
+  },
+  {
+    "name": "/dashboard/gallery/list",
+    "alias": "Gallery List View",
     "type": "client"
   },
   {
@@ -111,11 +184,6 @@
     "type": "client"
   },
   {
-    "name": "/dashboard/mfa/view",
-    "alias": "View Mfa Details",
-    "type": "client"
-  },
-  {
     "name": "/dashboard/permission",
     "alias": "Permission Dashboard",
     "type": "client"
@@ -133,11 +201,6 @@
   {
     "name": "/dashboard/permission/list",
     "alias": "Permission List View",
-    "type": "client"
-  },
-  {
-    "name": "/dashboard/permission/view",
-    "alias": "View Permission Details",
     "type": "client"
   },
   {
@@ -161,11 +224,6 @@
     "type": "client"
   },
   {
-    "name": "/dashboard/resource/view",
-    "alias": "View Resource Details",
-    "type": "client"
-  },
-  {
     "name": "/dashboard/role",
     "alias": "Role Dashboard",
     "type": "client"
@@ -183,11 +241,6 @@
   {
     "name": "/dashboard/role/list",
     "alias": "Role List View",
-    "type": "client"
-  },
-  {
-    "name": "/dashboard/role/view",
-    "alias": "View Role Details",
     "type": "client"
   },
   {
@@ -211,11 +264,6 @@
     "type": "client"
   },
   {
-    "name": "/dashboard/session/view",
-    "alias": "View Session Details",
-    "type": "client"
-  },
-  {
     "name": "/dashboard/user",
     "alias": "User Dashboard",
     "type": "client"
@@ -236,7 +284,37 @@
     "type": "client"
   },
   {
-    "name": "/dashboard/user/view",
+    "name": "/gallery/view",
+    "alias": "View Gallery Details",
+    "type": "client"
+  },
+  {
+    "name": "/mfa/view",
+    "alias": "View Mfa Details",
+    "type": "client"
+  },
+  {
+    "name": "/permission/view",
+    "alias": "View Permission Details",
+    "type": "client"
+  },
+  {
+    "name": "/resource/view",
+    "alias": "View Resource Details",
+    "type": "client"
+  },
+  {
+    "name": "/role/view",
+    "alias": "View Role Details",
+    "type": "client"
+  },
+  {
+    "name": "/session/view",
+    "alias": "View Session Details",
+    "type": "client"
+  },
+  {
+    "name": "/user/view",
     "alias": "View User Details",
     "type": "client"
   }

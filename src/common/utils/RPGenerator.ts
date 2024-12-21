@@ -116,7 +116,7 @@ function generateClientResources(moduleName: string): Resource[] {
       type: 'client'
     },
     {
-      name: `/dashboard/${moduleName}/view`,
+      name: `/${moduleName}/view`,
       alias: `View ${moduleName.charAt(0).toUpperCase() + moduleName.slice(1)} Details`,
       type: 'client'
     }

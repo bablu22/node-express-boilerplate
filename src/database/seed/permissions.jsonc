@@ -1,5 +1,69 @@
 [
   {
+    "resourceName": "/api/v1/gallery/all",
+    "resourceAlias": "Get All Gallerys",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/api/v1/gallery/folder",
+    "resourceAlias": "POST Gallery - folder",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/api/v1/gallery/folder/:folder/images",
+    "resourceAlias": "GET Gallery - folder/images",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/api/v1/gallery/folder/:id",
+    "resourceAlias": "DELETE Gallery - folder",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/api/v1/gallery/folders",
+    "resourceAlias": "GET Gallery - folders",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/api/v1/gallery/image/:id",
+    "resourceAlias": "DELETE Gallery - image",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/api/v1/gallery/images",
+    "resourceAlias": "DELETE Gallery - images",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/api/v1/gallery/upload/attachment",
+    "resourceAlias": "POST Gallery - upload/attachment",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
     "resourceName": "/api/v1/permission/:id",
     "resourceAlias": "Get Permission By ID",
     "roleName": "superadmin",
@@ -88,6 +152,22 @@
     "isDisabled": false
   },
   {
+    "resourceName": "/dashboard",
+    "resourceAlias": "Dashboard",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/auth/view",
+    "resourceAlias": "View Auth Details",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
     "resourceName": "/dashboard/auth",
     "resourceAlias": "Auth Dashboard",
     "roleName": "superadmin",
@@ -120,8 +200,32 @@
     "isDisabled": false
   },
   {
-    "resourceName": "/dashboard/auth/view",
-    "resourceAlias": "View Auth Details",
+    "resourceName": "/dashboard/gallery",
+    "resourceAlias": "Gallery Dashboard",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/gallery/create",
+    "resourceAlias": "Create New Gallery",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/gallery/edit",
+    "resourceAlias": "Edit Gallery",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/dashboard/gallery/list",
+    "resourceAlias": "Gallery List View",
     "roleName": "superadmin",
     "roleAlias": "Superadmin",
     "isAllowed": true,
@@ -160,14 +264,6 @@
     "isDisabled": false
   },
   {
-    "resourceName": "/dashboard/mfa/view",
-    "resourceAlias": "View Mfa Details",
-    "roleName": "superadmin",
-    "roleAlias": "Superadmin",
-    "isAllowed": true,
-    "isDisabled": false
-  },
-  {
     "resourceName": "/dashboard/permission",
     "resourceAlias": "Permission Dashboard",
     "roleName": "superadmin",
@@ -194,14 +290,6 @@
   {
     "resourceName": "/dashboard/permission/list",
     "resourceAlias": "Permission List View",
-    "roleName": "superadmin",
-    "roleAlias": "Superadmin",
-    "isAllowed": true,
-    "isDisabled": false
-  },
-  {
-    "resourceName": "/dashboard/permission/view",
-    "resourceAlias": "View Permission Details",
     "roleName": "superadmin",
     "roleAlias": "Superadmin",
     "isAllowed": true,
@@ -240,14 +328,6 @@
     "isDisabled": false
   },
   {
-    "resourceName": "/dashboard/resource/view",
-    "resourceAlias": "View Resource Details",
-    "roleName": "superadmin",
-    "roleAlias": "Superadmin",
-    "isAllowed": true,
-    "isDisabled": false
-  },
-  {
     "resourceName": "/dashboard/role",
     "resourceAlias": "Role Dashboard",
     "roleName": "superadmin",
@@ -274,14 +354,6 @@
   {
     "resourceName": "/dashboard/role/list",
     "resourceAlias": "Role List View",
-    "roleName": "superadmin",
-    "roleAlias": "Superadmin",
-    "isAllowed": true,
-    "isDisabled": false
-  },
-  {
-    "resourceName": "/dashboard/role/view",
-    "resourceAlias": "View Role Details",
     "roleName": "superadmin",
     "roleAlias": "Superadmin",
     "isAllowed": true,
@@ -320,14 +392,6 @@
     "isDisabled": false
   },
   {
-    "resourceName": "/dashboard/session/view",
-    "resourceAlias": "View Session Details",
-    "roleName": "superadmin",
-    "roleAlias": "Superadmin",
-    "isAllowed": true,
-    "isDisabled": false
-  },
-  {
     "resourceName": "/dashboard/user",
     "resourceAlias": "User Dashboard",
     "roleName": "superadmin",
@@ -360,7 +424,55 @@
     "isDisabled": false
   },
   {
-    "resourceName": "/dashboard/user/view",
+    "resourceName": "/gallery/view",
+    "resourceAlias": "View Gallery Details",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/mfa/view",
+    "resourceAlias": "View Mfa Details",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/permission/view",
+    "resourceAlias": "View Permission Details",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/resource/view",
+    "resourceAlias": "View Resource Details",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/role/view",
+    "resourceAlias": "View Role Details",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/session/view",
+    "resourceAlias": "View Session Details",
+    "roleName": "superadmin",
+    "roleAlias": "Superadmin",
+    "isAllowed": true,
+    "isDisabled": false
+  },
+  {
+    "resourceName": "/user/view",
     "resourceAlias": "View User Details",
     "roleName": "superadmin",
     "roleAlias": "Superadmin",
